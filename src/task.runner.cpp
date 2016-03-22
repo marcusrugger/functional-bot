@@ -8,7 +8,8 @@ TaskRunner::TaskRunner(void)
 
 void TaskRunner::operator()(void)
 {
-    std::for_each(_tasks.begin(), _tasks.end(), [](Runnable task){ task(); });
+    for (auto task : _tasks)
+        task();
 }
 
 
