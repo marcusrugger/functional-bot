@@ -6,10 +6,10 @@
 #include <Vlpp.h>
 
 
-typedef vl::Func<void(void)> Idleloop;
-typedef vl::Func<void(void)> Runnable;
-typedef vl::Func<void(void)> Command;
-typedef vl::Func<void(void)> Observer;
+using Idleloop = vl::Func<void(void)>;
+using Runnable = vl::Func<void(void)>;
+using Command  = vl::Func<void(void)>;
+using Observer = vl::Func<void(void)>;
 
 
 class BuildFabricator

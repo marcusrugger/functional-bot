@@ -1,39 +1,26 @@
 #include "task.runner.h"
+#include <algorithm>
 
 
 TaskRunner::TaskRunner(void)
-:   _count(0)
 {}
 
 
 void TaskRunner::operator()(void)
 {
-    for (unsigned int i = 0; i < _count; ++i)
-        _tasks[i]();
+    std::for_each(_tasks.begin(), _tasks.end(), [](Runnable task){ task(); });
 }
 
 
 void TaskRunner::schedule(Runnable task)
 {
-    if (_count < MAX_TASKS)
-        _tasks[_count++] = task;
+    _tasks.push_back(task);
 }
 
 
 void TaskRunner::unschedule(Runnable task)
 {
-    unsigned int is, id;
-    for (is = id = 0; is < _count; )
-    {
-        if (_tasks[is] == task)
-        {
-            if (++is < _count)
-                _tasks[id++] = _tasks[is++];
-            --_count;
-        }
-        else if (id < is)
-            _tasks[id++] = _tasks[is++];
-        else
-            id = ++is;
-    }
+    Tasks::iterator it = std::find(_tasks.begin(), _tasks.end(), task);
+    if (it != _tasks.end())
+        _tasks.erase(it);
 }

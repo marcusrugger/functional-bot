@@ -2,6 +2,7 @@
 #define TASK_RUNNER_H
 
 #include "interfaces.h"
+#include <vector>
 
 
 class TaskRunner
@@ -17,9 +18,8 @@ public:
 
 private:
 
-    static const unsigned int MAX_TASKS = 8;
-    Runnable _tasks[MAX_TASKS];
-    unsigned int _count = 0;
+    using Tasks = std::vector<Runnable>;
+    Tasks _tasks;
 
 };
 
