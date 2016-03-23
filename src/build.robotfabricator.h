@@ -13,7 +13,7 @@ public:
 
     RobotFabricator(void);
 
-    void buildDisplayCounter(void);
+    void buildDisplayAnimator(void);
 
     Idleloop getIdleloop(void);
 

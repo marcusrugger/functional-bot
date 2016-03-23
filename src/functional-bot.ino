@@ -10,7 +10,7 @@ Idleloop idleloop;
 void createRobot(void)
 {
     RobotFabricator fabricator;
-    fabricator.buildDisplayCounter();
+    fabricator.buildDisplayAnimator();
     idleloop = fabricator.getIdleloop();
 }
 

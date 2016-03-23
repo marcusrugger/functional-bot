@@ -11,7 +11,7 @@ RobotFabricator::RobotFabricator(void)
 {}
 
 
-void RobotFabricator::buildDisplayCounter(void)
+void RobotFabricator::buildDisplayAnimator(void)
 {
     Serializer serializer = assembleDisplaySerializer(2, 8);
     Runnable   animator   = assembleDisplayAnimator(serializer);
