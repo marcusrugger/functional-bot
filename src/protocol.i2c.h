@@ -20,7 +20,8 @@ protected:
     void start(void);
     void stop(void);
     void writeByte(uint8_t data);
-    void waitForAck(void);
+    void writeBit(uint8_t data);
+    void lookForAck(void);
     void stretchClock(void);
 
 

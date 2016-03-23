@@ -12,8 +12,6 @@ public:
 
     SegmentDisplayProtocol(DigitalPin *pinScl, DigitalPin *pinSda);
 
-    void setDisplayOn(bool flag);
-
     void operator()(Iterable<uint8_t> data);
 
 private:

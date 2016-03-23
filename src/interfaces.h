@@ -68,8 +68,6 @@ public:
     virtual ~BuildFabricator(void) {}
 
     virtual void buildDisplayAnimator(void) = 0;
-
-    virtual Idleloop getIdleloop(void) = 0;
 };
 
 

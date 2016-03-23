@@ -50,21 +50,26 @@ void I2CProtocol::writeByte(uint8_t data)
 {
     for (int bit = 0; bit < 8; bit++)
     {
-        _pinScl->setLow();
-        _pinSda->set(data & 0x01);
-        _pinScl->setHigh();
-        bitDelay();
-
-        stretchClock();
-
+        writeBit(data & 0x01);
         data >>= 1;
     }
 
-    waitForAck();
+    lookForAck();
 }
 
 
-void I2CProtocol::waitForAck(void)
+void I2CProtocol::writeBit(uint8_t data)
+{
+    _pinScl->setLow();
+    _pinSda->set(data);
+    _pinScl->setHigh();
+
+    bitDelay();
+    stretchClock();
+}
+
+
+void I2CProtocol::lookForAck(void)
 {
     _pinScl->setLow();
     _pinSda->setHigh();     bitDelay();

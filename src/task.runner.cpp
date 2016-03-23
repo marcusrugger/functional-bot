@@ -13,8 +13,7 @@ TaskRunner::TaskRunner(const TaskRunner &src)
 
 void TaskRunner::operator()(void)
 {
-    for (auto task : _tasks)
-        task();
+    for (auto task : _tasks) task();
 }
 
 
@@ -27,6 +26,5 @@ void TaskRunner::schedule(Runnable task)
 void TaskRunner::unschedule(Runnable task)
 {
     Tasks::iterator it = std::find(_tasks.begin(), _tasks.end(), task);
-    if (it != _tasks.end())
-        _tasks.erase(it);
+    if (it != _tasks.end()) _tasks.erase(it);
 }

@@ -4,22 +4,24 @@
 #include "build.robotfabricator.h"
 
 
-Idleloop idleloop;
+static Idleloop idleloop;
 
 
-void createRobot(void)
+static void createRobot(BuildFabricator &fabricator)
 {
-    RobotFabricator fabricator;
     fabricator.buildDisplayAnimator();
-    idleloop = fabricator.getIdleloop();
 }
 
 
 void setup(void)
 {
     Serial.begin(9600);
-    createRobot();
-    Serial.println("Exit setup");
+
+    RobotFabricator fabricator;
+    createRobot(fabricator);
+    idleloop = fabricator.getIdleloop();
+
+    Serial.println("Setup complete");
 }
 
 
