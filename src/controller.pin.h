@@ -35,6 +35,8 @@ class DigitalPinWriter
 {
 public:
 
+    virtual ~DigitalPinWriter() {}
+
     virtual void setLow(void) = 0;
     virtual void setHigh(void) = 0;
     virtual void set(bool value) = 0;
@@ -45,6 +47,8 @@ public:
 class DigitalPinReader
 {
 public:
+
+    virtual ~DigitalPinReader() {}
 
     virtual bool get(void) = 0;
     virtual unsigned long readPulse(bool state, unsigned long timeout) = 0;
@@ -57,6 +61,8 @@ class DigitalPin : public DigitalPinWriter,
 {
 public:
 
+    virtual DigitalPin *clone(void) = 0;
+
 };
 
 
@@ -68,6 +74,12 @@ public:
     :   _pin(pin),
         _pullup(pullup)
     { setMode(OUTPUT); }
+
+    ControllerDigitalPin(const ControllerDigitalPin &src)
+    :   _pin(src._pin),
+        _mode(src._mode),
+        _pullup(src._pullup)
+    {}
 
     void setLow(void)
     { setWriteMode(); digitalWrite(_pin, LOW); }
@@ -83,6 +95,9 @@ public:
 
     unsigned long readPulse(bool state, unsigned long timeout)
     { setMode(INPUT); return pulseIn(_pin, state ? HIGH : LOW, timeout); }
+
+    DigitalPin *clone(void)
+    { return new ControllerDigitalPin(*this); }
 
 
 private:

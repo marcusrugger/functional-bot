@@ -2,6 +2,7 @@
 #define BUILD_ROBOTFABRICATOR_H
 
 #include "interfaces.h"
+#include "task.runner.h"
 #include <memory>
 
 class TaskRunner;
@@ -20,7 +21,7 @@ public:
 
 private:
 
-    TaskRunner *_scheduler;
+    TaskRunner _scheduler;
 
     Serializer assembleDisplaySerializer(uint8_t Scl, uint8_t Sda);
     Runnable   assembleDisplayAnimator(Serializer serializer);

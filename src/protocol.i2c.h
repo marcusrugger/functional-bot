@@ -13,6 +13,8 @@ class I2CProtocol
 protected:
 
     I2CProtocol(DigitalPin *pinScl, DigitalPin *pinSda);
+    I2CProtocol(const I2CProtocol &src);
+    ~I2CProtocol(void);
 
     void bitDelay(void);
     void start(void);

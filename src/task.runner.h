@@ -10,6 +10,7 @@ class TaskRunner
 public:
 
     TaskRunner(void);
+    TaskRunner(const TaskRunner &src);
 
     void operator()(void);
 

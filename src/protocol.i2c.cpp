@@ -10,6 +10,19 @@ I2CProtocol::I2CProtocol(DigitalPin *pinScl, DigitalPin *pinSda)
 }
 
 
+I2CProtocol::I2CProtocol(const I2CProtocol &src)
+:   _pinScl(src._pinScl->clone()),
+    _pinSda(src._pinSda->clone())
+{}
+
+
+I2CProtocol::~I2CProtocol(void)
+{
+    delete _pinScl;
+    delete _pinSda;
+}
+
+
 void I2CProtocol::bitDelay(void)
 {
     delayMicroseconds(5);
