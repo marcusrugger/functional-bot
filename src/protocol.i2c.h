@@ -6,7 +6,7 @@
 #include "controller.pin.h"
 
 
-/* Writes LED-digits to display for TM1637 */
+/* Basic methods for writing I2C */
 
 class I2CProtocol
 {

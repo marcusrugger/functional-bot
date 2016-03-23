@@ -12,7 +12,23 @@ public:
 
     SegmentDisplayProtocol(DigitalPin *pinScl, DigitalPin *pinSda);
 
-    void operator()(Iterable<uint8_t> data);
+    template<typename ITERABLE>
+    void operator()(ITERABLE data)
+    {
+        start();
+        writeByte(ADDR_AUTO);
+        stop();
+
+        start();
+        writeByte(STARTADDR);
+        for (const auto b : data) writeByte(b);
+        stop();
+
+        start();
+        writeByte(Cmd_DispCtrl);
+        stop();
+    }
+
 
 private:
 
