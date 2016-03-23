@@ -22,8 +22,8 @@ private:
 
     TaskRunner *_scheduler;
 
-    Serializer buildDisplaySerializer(uint8_t Scl, uint8_t Sda);
-    Runnable   buildDisplayAnimator(Serializer serializer);
+    Serializer assembleDisplaySerializer(uint8_t Scl, uint8_t Sda);
+    Runnable   assembleDisplayAnimator(Serializer serializer);
 
 };
 

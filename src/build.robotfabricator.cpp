@@ -13,14 +13,14 @@ RobotFabricator::RobotFabricator(void)
 
 void RobotFabricator::buildDisplayCounter(void)
 {
-    Serializer serializer = buildDisplaySerializer(2, 8);
-    Runnable   animator   = buildDisplayAnimator(serializer);
+    Serializer serializer = assembleDisplaySerializer(2, 8);
+    Runnable   animator   = assembleDisplayAnimator(serializer);
 
     _scheduler->schedule(animator);
 }
 
 
-Serializer RobotFabricator::buildDisplaySerializer(uint8_t Scl, uint8_t Sda)
+Serializer RobotFabricator::assembleDisplaySerializer(uint8_t Scl, uint8_t Sda)
 {
     DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
     DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
@@ -29,7 +29,7 @@ Serializer RobotFabricator::buildDisplaySerializer(uint8_t Scl, uint8_t Sda)
 }
 
 
-Runnable RobotFabricator::buildDisplayAnimator(Serializer serializer)
+Runnable RobotFabricator::assembleDisplayAnimator(Serializer serializer)
 {
     DisplayAnimatorTask *animator = new DisplayAnimatorTask(serializer);
     TaskTimer *timer = new TaskTimer(100, *animator);

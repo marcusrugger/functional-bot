@@ -65,8 +65,7 @@ void SegmentDisplayProtocol::writeByte(uint8_t data)
         _pinScl->setHigh();
         bitDelay();
 
-        for (int cnt = 0; !_pinScl->get() && cnt < 20; cnt++)
-            bitDelay();
+        stretchClock();
 
         data >>= 1;
     }
@@ -78,12 +77,18 @@ void SegmentDisplayProtocol::writeByte(uint8_t data)
 void SegmentDisplayProtocol::waitForAck(void)
 {
     _pinScl->setLow();
-    _pinSda->setHigh();    bitDelay();
+    _pinSda->setHigh();     bitDelay();
     _pinScl->setHigh();
 
-    for (int cnt = 0; !_pinScl->get() && cnt < 20; cnt++)
-        bitDelay();
+    stretchClock();
 
     _pinScl->setLow();
     _pinSda->setLow();
+}
+
+
+void SegmentDisplayProtocol::stretchClock(void)
+{
+    for (int cnt = 0; !_pinScl->get() && cnt < 20; cnt++)
+        bitDelay();
 }

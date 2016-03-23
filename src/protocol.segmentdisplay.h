@@ -36,6 +36,7 @@ private:
     void stop(void);
     void writeByte(uint8_t data);
     void waitForAck(void);
+    void stretchClock(void);
 
 };
 

@@ -1,7 +1,7 @@
 #include "task.timer.h"
 
 
-TaskTimer::TaskTimer(uint16_t duration, Runnable task)
+TaskTimer::TaskTimer(unsigned long duration, Runnable task)
 :   _task(task),
     _wait_duration(duration),
     _wait_start(millis())

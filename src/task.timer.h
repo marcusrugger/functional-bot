@@ -8,7 +8,7 @@ class TaskTimer
 {
 public:
 
-    TaskTimer(uint16_t duration, Runnable task);
+    TaskTimer(unsigned long duration, Runnable task);
 
     void operator()(void);
 
@@ -16,8 +16,8 @@ public:
 private:
 
     Runnable _task;
-    uint16_t _wait_duration;
-    uint16_t _wait_start;
+    unsigned long _wait_duration;
+    unsigned long _wait_start;
 
 
     inline bool isTimeExpired(void)
