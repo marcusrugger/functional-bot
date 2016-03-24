@@ -68,6 +68,19 @@ public:
     virtual ~BuildFabricator(void) {}
 
     virtual void buildDisplayAnimator(void) = 0;
+    virtual void buildDisplayPin(void) = 0;
+};
+
+
+class Subject
+{
+public:
+
+    virtual ~Subject(void) {}
+
+    virtual void attach(Observer observer) = 0;
+    virtual void detach(Observer observer) = 0;
+
 };
 
 

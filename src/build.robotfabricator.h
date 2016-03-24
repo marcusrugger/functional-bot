@@ -15,6 +15,7 @@ public:
     RobotFabricator(void);
 
     void buildDisplayAnimator(void);
+    void buildDisplayPin(void);
 
     Idleloop getIdleloop(void);
 
@@ -25,6 +26,7 @@ private:
 
     Serializer assembleDisplaySerializer(uint8_t Scl, uint8_t Sda);
     Runnable   assembleDisplayAnimator(Serializer serializer);
+    Runnable   assembleDisplayAnalogPin(uint8_t pinNumber, Serializer serializer);
 
 };
 

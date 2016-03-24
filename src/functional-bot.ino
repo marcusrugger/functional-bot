@@ -13,12 +13,18 @@ static void createRobot(BuildFabricator &fabricator)
 }
 
 
+static void createWeatherStation(BuildFabricator &fabricator)
+{
+    fabricator.buildDisplayPin();
+}
+
+
 void setup(void)
 {
     Serial.begin(9600);
 
     RobotFabricator fabricator;
-    createRobot(fabricator);
+    createWeatherStation(fabricator);
     idleloop = fabricator.getIdleloop();
 
     Serial.println("Setup complete");

@@ -8,7 +8,10 @@ USER_LIB_PATH=/mnt/data/repositories/Makeblock/functional-bot/libraries
 ARDMK_DIR=/mnt/data/repositories/arduino_thirdparty/Arduino-Makefile
 
 CFLAGS_STD		+= -std=c11
+CFLAGS_STD		+= -Wno-unused-function
+
 CXXFLAGS_STD	+= -std=c++11
+CXXFLAGS_STD	+= -Wno-unused-function
 
 #ARDUINO_LIBS = SoftwareSerial
 
