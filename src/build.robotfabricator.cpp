@@ -2,7 +2,6 @@
 #include "controller.pin.h"
 #include "hardware.me7segmentencoder.h"
 #include "protocol.segmentdisplay.h"
-#include "task.analogpinwriter.h"
 #include "task.displayanimator.h"
 #include "task.runner.h"
 #include "task.timer.h"
@@ -49,8 +48,8 @@ Runnable RobotFabricator::assembleDisplayAnimator(Serializer serializer)
 Runnable RobotFabricator::assembleDisplayAnalogPin(uint8_t pinNumber, Serializer serializer)
 {
     DecEncoder encoder(Me7SegmentEncoder::encodeDec, serializer);
-    AnalogPinReader *pin = new ControllerPin(pinNumber, INPUT);
-    AnalogPinWriter writer(pin, encoder);
+    ControllerPin pin(pinNumber, INPUT);
+    auto writer = [=]() mutable { encoder(pin.readPin()); };
     return TaskTimer(100, writer);
 }
 
