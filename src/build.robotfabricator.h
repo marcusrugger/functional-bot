@@ -24,8 +24,7 @@ private:
 
     TaskRunner _scheduler;
 
-    Serializer assembleDisplaySerializer(uint8_t Scl, uint8_t Sda);
-    Runnable   assembleDisplayAnimator(Serializer serializer);
+    Runnable   assembleDisplayAnimator(uint8_t Scl, uint8_t Sda);
     Runnable   assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda);
 
 };

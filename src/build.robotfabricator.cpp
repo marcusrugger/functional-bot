@@ -12,33 +12,26 @@ RobotFabricator::RobotFabricator(void)
 {}
 
 
-// scheduler -> timer -> animator -> protocol -> display
 void RobotFabricator::buildDisplayAnimator(void)
 {
-    Serializer serializer(assembleDisplaySerializer(2, 8));
-    Runnable animator(assembleDisplayAnimator(serializer));
-
+    Runnable animator(assembleDisplayAnimator(2, 8));
     _scheduler.schedule(animator);
 }
 
 
 void RobotFabricator::buildDisplayPin(void)
 {
-    Runnable animator(assembleDisplayAnalogPin(A0, 2, 8));
-    _scheduler.schedule(animator);
+    Runnable pinwriter(assembleDisplayAnalogPin(A0, 2, 8));
+    _scheduler.schedule(pinwriter);
 }
 
 
-Serializer RobotFabricator::assembleDisplaySerializer(uint8_t Scl, uint8_t Sda)
+Runnable RobotFabricator::assembleDisplayAnimator(uint8_t Scl, uint8_t Sda)
 {
     DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
     DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
-    return SegmentDisplayProtocol(pinScl, pinSda);
-}
+    SegmentDisplayProtocol serializer(pinScl, pinSda);
 
-
-Runnable RobotFabricator::assembleDisplayAnimator(Serializer serializer)
-{
     DisplayAnimatorTask animator;
     auto runner = [=]() mutable { serializer(animator()); };
     return TaskTimer(100, runner);

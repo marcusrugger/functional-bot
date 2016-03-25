@@ -11,15 +11,14 @@ public:
 
     using Encoder = vl::Func<uint8_t(uint8_t)>;
 
-    HexEncoder(Encoder encoder, Serializer writer);
+    HexEncoder(Encoder encoder);
 
-    void operator()(uint16_t number);
+    std::vector<uint8_t> operator()(uint16_t number);
 
 
 private:
 
     Encoder _encoder;
-    Serializer _writer;
 
 };
 
@@ -38,7 +37,6 @@ public:
 private:
 
     Encoder _encoder;
-    Serializer _writer;
 
 };
 

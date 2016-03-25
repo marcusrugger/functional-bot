@@ -24,7 +24,7 @@ void setup(void)
     Serial.begin(9600);
 
     RobotFabricator fabricator;
-    createWeatherStation(fabricator);
+    createRobot(fabricator);
     idleloop = fabricator.getIdleloop();
 
     Serial.println("Setup complete");

@@ -2,23 +2,21 @@
 #include "hardware.me7segmentencoder.h"
 
 
-HexEncoder::HexEncoder(Encoder encoder, Serializer writer)
-:   _encoder(encoder),
-    _writer(writer)
+HexEncoder::HexEncoder(Encoder encoder)
+:   _encoder(encoder)
 {}
 
 
-void HexEncoder::operator()(uint16_t number)
+std::vector<uint8_t> HexEncoder::operator()(uint16_t number)
 {
-    uint8_t digits[4];
+    std::vector<uint8_t> digits(4);
 
     digits[3] = _encoder( number       );
     digits[2] = _encoder( number >>= 4 );
     digits[1] = _encoder( number >>= 4 );
     digits[0] = _encoder( number >>= 4 );
 
-    Iterable<uint8_t> it(digits, 4);
-    _writer(it);
+    return digits;
 }
 
 
