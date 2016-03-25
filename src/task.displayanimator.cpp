@@ -30,16 +30,14 @@ const uint8_t animation[][4] =
 };
 
 
-DisplayAnimatorTask::DisplayAnimatorTask(Serializer writer)
-:   _writer(writer),
-    _animation_index(0)
+DisplayAnimatorTask::DisplayAnimatorTask(void)
+:   _animation_index(0)
 {}
 
 
-void DisplayAnimatorTask::operator()(void)
+Iterable<uint8_t> DisplayAnimatorTask::operator()(void)
 {
     Iterable<uint8_t> it(animation[_animation_index++], 4);
     _animation_index %= animation_count;
-
-    _writer(it);
+    return it;
 }

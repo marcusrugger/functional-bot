@@ -2,6 +2,7 @@
 #define PROTOCOL_SEGMENTDISPLAY_H
 
 #include "protocol.i2c.h"
+#include <vector>
 
 
 /* Writes LED-digits to display for TM1637 */
@@ -37,7 +38,7 @@ private:
     static const uint8_t SEGDIS_ON  = 0x88;   //diplay on
     static const uint8_t SEGDIS_OFF = 0x80;   //diplay off
 
-    static const uint8_t Cmd_DispCtrl = SEGDIS_ON + 2;
+    static const uint8_t Cmd_DispCtrl = SEGDIS_ON + 0;
 
 };
 

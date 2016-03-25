@@ -8,14 +8,13 @@ class DisplayAnimatorTask
 {
 public:
 
-    DisplayAnimatorTask(Serializer writer);
+    DisplayAnimatorTask(void);
 
-    void operator()(void);
+    Iterable<uint8_t> operator()(void);
 
 
 private:
 
-    Serializer _writer;
     uint16_t _animation_index;
 
 };

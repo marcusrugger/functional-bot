@@ -12,6 +12,7 @@ RobotFabricator::RobotFabricator(void)
 {}
 
 
+// scheduler -> timer -> animator -> protocol -> display
 void RobotFabricator::buildDisplayAnimator(void)
 {
     Serializer serializer(assembleDisplaySerializer(2, 8));
@@ -23,9 +24,7 @@ void RobotFabricator::buildDisplayAnimator(void)
 
 void RobotFabricator::buildDisplayPin(void)
 {
-    Serializer serializer(assembleDisplaySerializer(2, 8));
-    Runnable animator(assembleDisplayAnalogPin(A0, serializer));
-
+    Runnable animator(assembleDisplayAnalogPin(A0, 2, 8));
     _scheduler.schedule(animator);
 }
 
@@ -40,16 +39,22 @@ Serializer RobotFabricator::assembleDisplaySerializer(uint8_t Scl, uint8_t Sda)
 
 Runnable RobotFabricator::assembleDisplayAnimator(Serializer serializer)
 {
-    DisplayAnimatorTask animator(serializer);
-    return TaskTimer(100, animator);
+    DisplayAnimatorTask animator;
+    auto runner = [=]() mutable { serializer(animator()); };
+    return TaskTimer(100, runner);
 }
 
 
-Runnable RobotFabricator::assembleDisplayAnalogPin(uint8_t pinNumber, Serializer serializer)
+Runnable RobotFabricator::assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda)
 {
-    DecEncoder encoder(Me7SegmentEncoder::encodeDec, serializer);
+    DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
+    DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
+    vl::Func<void(std::vector<uint8_t>)> serializer = SegmentDisplayProtocol(pinScl, pinSda);
+
+    DecEncoder encoder(Me7SegmentEncoder::encodeDec);
     ControllerPin pin(pinNumber, INPUT);
-    auto writer = [=]() mutable { encoder(pin.readPin()); };
+
+    auto writer = [=]() mutable { serializer(encoder(pin.readPin())); };
     return TaskTimer(100, writer);
 }
 

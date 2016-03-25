@@ -2,6 +2,7 @@
 #define UTIL_ENCODERS_H
 
 #include "interfaces.h"
+#include <vector>
 
 
 class HexEncoder
@@ -29,9 +30,9 @@ public:
 
     using Encoder = vl::Func<uint8_t(uint8_t)>;
 
-    DecEncoder(Encoder encoder, Serializer writer);
+    DecEncoder(Encoder encoder);
 
-    void operator()(uint16_t number);
+    std::vector<uint8_t> operator()(uint16_t number);
 
 
 private:
