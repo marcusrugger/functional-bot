@@ -6,11 +6,6 @@ TaskRunner::TaskRunner(void)
 {}
 
 
-TaskRunner::TaskRunner(const TaskRunner &src)
-:   _tasks(src._tasks)
-{}
-
-
 void TaskRunner::operator()(void)
 {
     for (auto task : _tasks) task();

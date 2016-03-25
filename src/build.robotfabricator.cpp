@@ -8,6 +8,14 @@
 #include "util.encoders.h"
 
 
+static SegmentDisplayProtocol createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda)
+{
+    DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
+    DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
+    return SegmentDisplayProtocol(pinScl, pinSda);
+}
+
+
 RobotFabricator::RobotFabricator(void)
 {}
 
@@ -28,21 +36,16 @@ void RobotFabricator::buildDisplayPin(void)
 
 Runnable RobotFabricator::assembleDisplayAnimator(uint8_t Scl, uint8_t Sda)
 {
-    DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
-    DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
-    SegmentDisplayProtocol serializer(pinScl, pinSda);
-
+    SegmentDisplayProtocol serializer(createSegmentDisplayProtocol(Scl, Sda));
     DisplayAnimatorTask animator;
+
     return [=]() mutable { serializer(animator()); };
 }
 
 
 Runnable RobotFabricator::assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda)
 {
-    DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
-    DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
-    SegmentDisplayProtocol serializer(pinScl, pinSda);
-
+    SegmentDisplayProtocol serializer(createSegmentDisplayProtocol(Scl, Sda));
     DecEncoder encoder(Me7SegmentEncoder::encodeDec);
     ControllerPin pin(pinNumber, INPUT);
 
