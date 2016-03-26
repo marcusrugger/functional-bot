@@ -10,7 +10,7 @@ public:
 
     DisplayAnimatorTask(void);
 
-    Iterable<uint8_t> operator()(void);
+    Array<uint8_t> operator()(void);
 
 
 private:

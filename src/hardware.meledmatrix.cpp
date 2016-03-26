@@ -20,9 +20,9 @@ const uint8_t charMap[][5] =
 };
 
 
-Iterable<uint8_t> MeLEDMatrixEncoder::encodeChar(uint8_t n)
+Array<uint8_t> MeLEDMatrixEncoder::encodeChar(uint8_t n)
 {
-    return Iterable<uint8_t>(charMap[n % 2], 5);
+    return Array<uint8_t>(charMap[n % 2], 5);
 }
 
 
@@ -127,13 +127,13 @@ const uint8_t hexMap[][4]
 };
 
 
-Iterable<uint8_t> MeLEDMatrixEncoder::encodeHex(uint8_t n)
+Array<uint8_t> MeLEDMatrixEncoder::encodeHex(uint8_t n)
 {
-    return Iterable<uint8_t>(hexMap[n & 0x0f], 4);
+    return Array<uint8_t>(hexMap[n & 0x0f], 4);
 }
 
 
-Iterable<uint8_t> MeLEDMatrixEncoder::encodeDec(uint8_t n)
+Array<uint8_t> MeLEDMatrixEncoder::encodeDec(uint8_t n)
 {
-    return Iterable<uint8_t>(hexMap[n % 10], 4);
+    return Array<uint8_t>(hexMap[n % 10], 4);
 }

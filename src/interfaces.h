@@ -13,19 +13,19 @@ using Observer = vl::Func<void(void)>;
 
 
 template<class T>
-class Iterator
+class ArrayIterator
 {
 public:
 
-    Iterator(const T *ptr) : _ptr(ptr) {}
+    ArrayIterator(const T *ptr) : _ptr(ptr) {}
 
-    Iterator &operator++(void)
+    ArrayIterator &operator++(void)
     { ++_ptr; return *this; }
 
-    Iterator operator++(int)
-    { return Iterator<T>(_ptr++); }
+    ArrayIterator operator++(int)
+    { return ArrayIterator<T>(_ptr++); }
 
-    bool operator!=(const Iterator &other) const
+    bool operator!=(const ArrayIterator &other) const
     { return _ptr != other._ptr; }
 
     const T &operator*(void) const
@@ -39,18 +39,18 @@ private:
 
 
 template<class T>
-class Iterable
+class Array
 {
 public:
 
-    Iterable(void) : _ptr(NULL), _len(0) {}
-    Iterable(const T *ptr, uint16_t len) : _ptr(ptr), _len(len) {}
+    Array(void) : _ptr(NULL), _len(0) {}
+    Array(const T *ptr, uint16_t len) : _ptr(ptr), _len(len) {}
 
-    Iterator<T> begin(void)
-    { return Iterator<T>(_ptr); }
+    ArrayIterator<T> begin(void)
+    { return ArrayIterator<T>(_ptr); }
 
-    Iterator<T> end(void)
-    { return Iterator<T>(_ptr+_len); }
+    ArrayIterator<T> end(void)
+    { return ArrayIterator<T>(_ptr+_len); }
 
 private:
 
@@ -59,7 +59,7 @@ private:
 };
 
 
-using Serializer = vl::Func<void(Iterable<uint8_t>)>;
+using Serializer = vl::Func<void(Array<uint8_t>)>;
 
 
 class BuildFabricator

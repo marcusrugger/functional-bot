@@ -35,9 +35,9 @@ DisplayAnimatorTask::DisplayAnimatorTask(void)
 {}
 
 
-Iterable<uint8_t> DisplayAnimatorTask::operator()(void)
+Array<uint8_t> DisplayAnimatorTask::operator()(void)
 {
-    Iterable<uint8_t> it(animation[_animation_index++], 4);
+    Array<uint8_t> it(animation[_animation_index++], 4);
     _animation_index %= animation_count;
     return it;
 }

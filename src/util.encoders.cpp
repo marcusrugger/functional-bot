@@ -46,7 +46,7 @@ MatrixDecEncoder::MatrixDecEncoder(Encoder encoder)
 std::vector<uint8_t> MatrixDecEncoder::operator()(uint16_t number)
 {
     std::vector<uint8_t> digits;
-    Iterable<uint8_t> it;
+    Array<uint8_t> it;
 
     it = _encoder(number);
     digits.insert(digits.end(), it.begin(), it.end());

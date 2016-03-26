@@ -45,7 +45,7 @@ class MatrixDecEncoder
 {
 public:
 
-    using Encoder = vl::Func<Iterable<uint8_t>(uint8_t)>;
+    using Encoder = vl::Func<Array<uint8_t>(uint8_t)>;
 
     MatrixDecEncoder(Encoder encoder);
 

@@ -8,9 +8,9 @@ class MeLEDMatrixEncoder
 {
 public:
 
-    static Iterable<uint8_t> encodeChar(uint8_t ch);
-    static Iterable<uint8_t> encodeHex(uint8_t number);
-    static Iterable<uint8_t> encodeDec(uint8_t number);
+    static Array<uint8_t> encodeChar(uint8_t ch);
+    static Array<uint8_t> encodeHex(uint8_t number);
+    static Array<uint8_t> encodeDec(uint8_t number);
 
 };
 
