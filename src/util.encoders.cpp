@@ -36,3 +36,29 @@ std::vector<uint8_t> DecEncoder::operator()(uint16_t number)
 
     return digits;
 }
+
+
+MatrixDecEncoder::MatrixDecEncoder(Encoder encoder)
+:   _encoder(encoder)
+{}
+
+
+std::vector<uint8_t> MatrixDecEncoder::operator()(uint16_t number)
+{
+    std::vector<uint8_t> digits;
+    Iterable<uint8_t> it;
+
+    it = _encoder(number);
+    digits.insert(digits.end(), it.begin(), it.end());
+
+    it = _encoder(number /= 10);
+    digits.insert(digits.end(), it.begin(), it.end());
+
+    it = _encoder(number /= 10);
+    digits.insert(digits.end(), it.begin(), it.end());
+
+    it = _encoder(number /= 10);
+    digits.insert(digits.end(), it.begin(), it.end());
+
+    return digits;
+}

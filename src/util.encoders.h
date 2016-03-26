@@ -41,4 +41,22 @@ private:
 };
 
 
+class MatrixDecEncoder
+{
+public:
+
+    using Encoder = vl::Func<Iterable<uint8_t>(uint8_t)>;
+
+    MatrixDecEncoder(Encoder encoder);
+
+    std::vector<uint8_t> operator()(uint16_t number);
+
+
+private:
+
+    Encoder _encoder;
+
+};
+
+
 #endif

@@ -16,12 +16,8 @@ public:
     void operator()(ITERABLE data)
     {
         start();
-
-        writeByte2(STARTADDR);
-
-        for (int a = 0; a < 4; a++)
+        // writeByte2(STARTADDR);
         for (const auto b : data) writeByte2(b);
-
         stop();
     }
 

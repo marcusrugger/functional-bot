@@ -43,6 +43,7 @@ class Iterable
 {
 public:
 
+    Iterable(void) : _ptr(NULL), _len(0) {}
     Iterable(const T *ptr, uint16_t len) : _ptr(ptr), _len(len) {}
 
     Iterator<T> begin(void)
