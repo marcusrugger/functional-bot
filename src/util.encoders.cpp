@@ -38,6 +38,36 @@ std::vector<uint8_t> DecEncoder::operator()(uint16_t number)
 }
 
 
+MatrixHexEncoder::MatrixHexEncoder(Encoder encoder)
+:   _encoder(encoder)
+{}
+
+
+std::vector<uint8_t> MatrixHexEncoder::operator()(uint16_t number)
+{
+    std::vector<uint8_t> digits;
+    Array<uint8_t> array;
+
+    array = _encoder(number);
+    digits.insert(digits.end(), array.begin(), array.end());
+    digits.push_back(0);
+
+    array = _encoder(number >>= 4);
+    digits.insert(digits.end(), array.begin(), array.end());
+    digits.push_back(0);
+
+    array = _encoder(number >>= 4);
+    digits.push_back(0);
+    digits.insert(digits.end(), array.begin(), array.end());
+
+    array = _encoder(number >>= 4);
+    digits.push_back(0);
+    digits.insert(digits.end(), array.begin(), array.end());
+
+    return digits;
+}
+
+
 MatrixDecEncoder::MatrixDecEncoder(Encoder encoder)
 :   _encoder(encoder)
 {}

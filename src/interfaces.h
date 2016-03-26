@@ -25,11 +25,17 @@ public:
     ArrayIterator operator++(int)
     { return ArrayIterator<T>(_ptr++); }
 
+    bool operator==(const ArrayIterator &other) const
+    { return _ptr == other._ptr; }
+
     bool operator!=(const ArrayIterator &other) const
     { return _ptr != other._ptr; }
 
     const T &operator*(void) const
     { return *_ptr; }
+
+    const T *operator->(void) const
+    { return _ptr; }
 
 private:
 
@@ -56,6 +62,7 @@ private:
 
     const T *_ptr;
     uint16_t _len;
+
 };
 
 

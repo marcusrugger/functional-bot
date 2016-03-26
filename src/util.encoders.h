@@ -41,6 +41,24 @@ private:
 };
 
 
+class MatrixHexEncoder
+{
+public:
+
+    using Encoder = vl::Func<Array<uint8_t>(uint8_t)>;
+
+    MatrixHexEncoder(Encoder encoder);
+
+    std::vector<uint8_t> operator()(uint16_t number);
+
+
+private:
+
+    Encoder _encoder;
+
+};
+
+
 class MatrixDecEncoder
 {
 public:

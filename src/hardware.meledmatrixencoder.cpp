@@ -1,4 +1,4 @@
-#include "hardware.meledmatrix.h"
+#include "hardware.meledmatrixencoder.h"
 
 
 const uint8_t charMap[][5] =

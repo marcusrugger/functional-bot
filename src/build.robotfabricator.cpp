@@ -1,7 +1,7 @@
 #include "build.robotfabricator.h"
 #include "controller.pin.h"
 #include "hardware.me7segmentencoder.h"
-#include "hardware.meledmatrix.h"
+#include "hardware.meledmatrixencoder.h"
 #include "protocol.segmentdisplay.h"
 #include "protocol.meledmatrix.h"
 #include "task.displayanimator.h"
@@ -81,11 +81,20 @@ Runnable RobotFabricator::assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Sc
 
 Runnable RobotFabricator::assembleMatrixDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda)
 {
-    MeLEDMatrixProtocol serializer(createMeLEDMatrixProtocol(Scl, Sda));
-    MatrixDecEncoder encoder(MeLEDMatrixEncoder::encodeDec);
+    SegmentDisplayProtocol serializer1(createSegmentDisplayProtocol(2, 8));
+    DecEncoder encoder1(Me7SegmentEncoder::encodeDec);
+
+    MeLEDMatrixProtocol serializer2(createMeLEDMatrixProtocol(Scl, Sda));
+    MatrixDecEncoder encoder2(MeLEDMatrixEncoder::encodeDec);
+
     ControllerPin pin(pinNumber, INPUT);
 
-    return [=]() mutable { serializer(encoder(pin.readPin())); };
+    return [=]() mutable
+    {
+        uint16_t pinValue = pin.readPin();
+        serializer1(encoder1(pinValue));
+        serializer2(encoder2(pinValue));
+    };
 }
 
 
