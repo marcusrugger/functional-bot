@@ -15,6 +15,7 @@ public:
     RobotFabricator(void);
 
     void buildDisplayAnimator(void);
+    void buildMatrixAnimator(void);
     void buildDisplayPin(void);
 
     Idleloop getIdleloop(void);
@@ -27,6 +28,7 @@ private:
     void schedule(uint16_t time, Runnable task);
 
     Runnable   assembleDisplayAnimator(uint8_t Scl, uint8_t Sda);
+    Runnable   assembleMatrixAnimator(uint8_t Scl, uint8_t Sda);
     Runnable   assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda);
 
 };

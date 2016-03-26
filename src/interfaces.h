@@ -68,6 +68,7 @@ public:
     virtual ~BuildFabricator(void) {}
 
     virtual void buildDisplayAnimator(void) = 0;
+    virtual void buildMatrixAnimator(void) = 0;
     virtual void buildDisplayPin(void) = 0;
 };
 

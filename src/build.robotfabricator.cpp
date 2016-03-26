@@ -2,10 +2,19 @@
 #include "controller.pin.h"
 #include "hardware.me7segmentencoder.h"
 #include "protocol.segmentdisplay.h"
+#include "protocol.meledmatrix.h"
 #include "task.displayanimator.h"
 #include "task.runner.h"
 #include "task.timer.h"
 #include "util.encoders.h"
+
+
+static MeLEDMatrixProtocol createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda)
+{
+    DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
+    DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
+    return MeLEDMatrixProtocol(pinScl, pinSda);
+}
 
 
 static SegmentDisplayProtocol createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda)
@@ -27,6 +36,13 @@ void RobotFabricator::buildDisplayAnimator(void)
 }
 
 
+void RobotFabricator::buildMatrixAnimator(void)
+{
+    Runnable animator(assembleMatrixAnimator(12, 13));
+    schedule(100, animator);
+}
+
+
 void RobotFabricator::buildDisplayPin(void)
 {
     Runnable pinwriter(assembleDisplayAnalogPin(A0, 2, 8));
@@ -37,6 +53,15 @@ void RobotFabricator::buildDisplayPin(void)
 Runnable RobotFabricator::assembleDisplayAnimator(uint8_t Scl, uint8_t Sda)
 {
     SegmentDisplayProtocol serializer(createSegmentDisplayProtocol(Scl, Sda));
+    DisplayAnimatorTask animator;
+
+    return [=]() mutable { serializer(animator()); };
+}
+
+
+Runnable RobotFabricator::assembleMatrixAnimator(uint8_t Scl, uint8_t Sda)
+{
+    MeLEDMatrixProtocol serializer(createMeLEDMatrixProtocol(Scl, Sda));
     DisplayAnimatorTask animator;
 
     return [=]() mutable { serializer(animator()); };

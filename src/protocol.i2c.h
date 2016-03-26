@@ -25,7 +25,7 @@ protected:
     void stretchClock(void);
 
 
-private:
+protected:
 
     DigitalPin *_pinScl;
     DigitalPin *_pinSda;
