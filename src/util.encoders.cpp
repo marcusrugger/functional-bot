@@ -46,19 +46,23 @@ MatrixDecEncoder::MatrixDecEncoder(Encoder encoder)
 std::vector<uint8_t> MatrixDecEncoder::operator()(uint16_t number)
 {
     std::vector<uint8_t> digits;
-    Array<uint8_t> it;
+    Array<uint8_t> array;
 
-    it = _encoder(number);
-    digits.insert(digits.end(), it.begin(), it.end());
+    array = _encoder(number);
+    digits.insert(digits.end(), array.begin(), array.end());
+    digits.push_back(0);
 
-    it = _encoder(number /= 10);
-    digits.insert(digits.end(), it.begin(), it.end());
+    array = _encoder(number /= 10);
+    digits.insert(digits.end(), array.begin(), array.end());
+    digits.push_back(0);
 
-    it = _encoder(number /= 10);
-    digits.insert(digits.end(), it.begin(), it.end());
+    array = _encoder(number /= 10);
+    digits.push_back(0);
+    digits.insert(digits.end(), array.begin(), array.end());
 
-    it = _encoder(number /= 10);
-    digits.insert(digits.end(), it.begin(), it.end());
+    array = _encoder(number /= 10);
+    digits.push_back(0);
+    digits.insert(digits.end(), array.begin(), array.end());
 
     return digits;
 }
