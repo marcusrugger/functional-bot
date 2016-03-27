@@ -15,6 +15,17 @@ MeLEDMatrixProtocol::MeLEDMatrixProtocol(DigitalPin *pinScl, DigitalPin *pinSda)
     start();
     writeByte(Cmd_DispCtrl);
     stop();
+
+    clearMatrix();
+}
+
+
+void MeLEDMatrixProtocol::clearMatrix(void)
+{
+    start();
+    writeByte(STARTADDR);
+    for (int a = 0; a < MATRIX_LENGTH; ++a) writeByte(0);
+    stop();
 }
 
 

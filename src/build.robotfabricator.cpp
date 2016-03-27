@@ -10,7 +10,7 @@
 #include "util.encoders.h"
 
 
-static MeLEDMatrixProtocol createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda)
+MeLEDMatrixProtocol RobotFabricator::createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda)
 {
     DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
     DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
@@ -18,7 +18,7 @@ static MeLEDMatrixProtocol createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda)
 }
 
 
-static SegmentDisplayProtocol createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda)
+SegmentDisplayProtocol RobotFabricator::createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda)
 {
     DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
     DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
@@ -46,7 +46,7 @@ void RobotFabricator::buildMatrixAnimator(void)
 
 void RobotFabricator::buildDisplayPin(void)
 {
-    Runnable pinwriter(assembleMatrixDisplayAnalogPin(A0, 12, 13));
+    Runnable pinwriter(assembleDisplayAnalogPin(A0, 2, 8));
     schedule(100, pinwriter);
 }
 

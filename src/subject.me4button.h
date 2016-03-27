@@ -24,6 +24,11 @@ public:
 
     BUTTONS getState(void);
 
+
+private:
+
+    BUTTONS _button_state;
+
 };
 
 

@@ -2,7 +2,8 @@
 
 
 Me4ButtonSubject::Me4ButtonSubject(void)
-:   BaseSubject()
+:   BaseSubject(),
+    _button_state(BUTTON_NONE)
 {}
 
 
@@ -12,5 +13,5 @@ void Me4ButtonSubject::operator()(void)
 
 Me4ButtonSubject::BUTTONS Me4ButtonSubject::getState(void)
 {
-    return BUTTON_NONE;
+    return _button_state;
 }

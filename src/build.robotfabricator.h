@@ -6,6 +6,8 @@
 #include <memory>
 
 class TaskRunner;
+class MeLEDMatrixProtocol;
+class SegmentDisplayProtocol;
 
 
 class RobotFabricator : public BuildFabricator
@@ -29,6 +31,9 @@ protected:
     Runnable   assembleMatrixAnimator(uint8_t Scl, uint8_t Sda);
     Runnable   assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda);
     Runnable   assembleMatrixDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda);
+
+    MeLEDMatrixProtocol     createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda);
+    SegmentDisplayProtocol  createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda);
 
 
 private:
