@@ -21,9 +21,7 @@ public:
     Idleloop getIdleloop(void);
 
 
-private:
-
-    TaskRunner _scheduler;
+protected:
 
     void schedule(uint16_t time, Runnable task);
 
@@ -31,6 +29,11 @@ private:
     Runnable   assembleMatrixAnimator(uint8_t Scl, uint8_t Sda);
     Runnable   assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda);
     Runnable   assembleMatrixDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda);
+
+
+private:
+
+    TaskRunner _scheduler;
 
 };
 
