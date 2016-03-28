@@ -8,6 +8,8 @@ class AnalogPinReader
 {
 public:
 
+    virtual ~AnalogPinReader(void) {}
+
     virtual int16_t readPin(void) = 0;
     virtual AnalogPinReader *clone(void) const = 0;
 

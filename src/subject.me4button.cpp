@@ -17,17 +17,9 @@ Me4ButtonSubject::Me4ButtonSubject(const Me4ButtonSubject &that)
 
 Me4ButtonSubject::Me4ButtonSubject(Me4ButtonSubject &&that)
 :   BaseSubject(),
-    _pin(that._pin),
+    _pin(that._pin.release()),
     _buttonState(that._buttonState)
-{
-    that._pin = NULL;
-}
-
-
-Me4ButtonSubject::~Me4ButtonSubject(void)
-{
-    if (_pin) delete _pin;
-}
+{}
 
 
 void Me4ButtonSubject::operator()(void)

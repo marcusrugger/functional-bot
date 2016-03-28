@@ -4,6 +4,7 @@
 #include "interfaces.h"
 #include "controller.pin.h"
 #include "subject.base.h"
+#include <memory>
 
 
 class Me4ButtonSubject : public BaseSubject
@@ -13,7 +14,6 @@ public:
     Me4ButtonSubject(AnalogPinReader *pin);
     Me4ButtonSubject(const Me4ButtonSubject &that);
     Me4ButtonSubject(Me4ButtonSubject &&that);
-    ~Me4ButtonSubject(void);
 
     void operator()(void);
 
@@ -31,7 +31,7 @@ public:
 
 private:
 
-    AnalogPinReader *_pin;
+    std::auto_ptr<AnalogPinReader> _pin;
     BUTTONS _buttonState;
 
     BUTTONS translatePin(uint16_t pinValue);
