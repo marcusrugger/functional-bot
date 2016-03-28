@@ -2,6 +2,7 @@
 #define SUBJECT_ME4BUTTON_H
 
 #include "interfaces.h"
+#include "controller.pin.h"
 #include "subject.base.h"
 
 
@@ -9,7 +10,7 @@ class Me4ButtonSubject : public BaseSubject
 {
 public:
 
-    Me4ButtonSubject(void);
+    Me4ButtonSubject(AnalogPinReader *pin);
 
     void operator()(void);
 
@@ -27,7 +28,10 @@ public:
 
 private:
 
-    BUTTONS _button_state;
+    AnalogPinReader *_pin;
+    BUTTONS _buttonState;
+
+    BUTTONS translatePin(uint16_t pinValue);
 
 };
 
