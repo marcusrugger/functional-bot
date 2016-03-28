@@ -12,16 +12,16 @@
 
 MeLEDMatrixProtocol RobotFabricator::createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda)
 {
-    DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
-    DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
+    DigitalPin *pinScl = new ControllerDigitalPin(Scl);
+    DigitalPin *pinSda = new ControllerDigitalPin(Sda);
     return MeLEDMatrixProtocol(pinScl, pinSda);
 }
 
 
 SegmentDisplayProtocol RobotFabricator::createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda)
 {
-    DigitalPin *pinScl = new ControllerDigitalPin(Scl, true);
-    DigitalPin *pinSda = new ControllerDigitalPin(Sda, true);
+    DigitalPin *pinScl = new ControllerDigitalPin(Scl);
+    DigitalPin *pinSda = new ControllerDigitalPin(Sda);
     return SegmentDisplayProtocol(pinScl, pinSda);
 }
 
@@ -73,7 +73,7 @@ Runnable RobotFabricator::assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Sc
 {
     SegmentDisplayProtocol serializer(createSegmentDisplayProtocol(Scl, Sda));
     DecEncoder encoder(Me7SegmentEncoder::encodeDec);
-    ControllerPin pin(pinNumber, INPUT);
+    ControllerPin pin(pinNumber);
 
     return [=]() mutable { serializer(encoder(pin.readPin())); };
 }
@@ -87,7 +87,7 @@ Runnable RobotFabricator::assembleMatrixDisplayAnalogPin(uint8_t pinNumber, uint
     MeLEDMatrixProtocol serializer2(createMeLEDMatrixProtocol(Scl, Sda));
     MatrixDecEncoder encoder2(MeLEDMatrixEncoder::encodeDec);
 
-    ControllerPin pin(pinNumber, INPUT);
+    ControllerPin pin(pinNumber);
 
     return [=]() mutable
     {

@@ -17,7 +17,7 @@ class ControllerPin : public AnalogPinReader
 {
 public:
 
-    ControllerPin(uint8_t pin, uint8_t mode) : _pin(pin) {}
+    ControllerPin(uint8_t pin) : _pin(pin) {}
 
     int16_t readPin(void)
     { return analogRead(_pin); }
