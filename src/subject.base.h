@@ -16,6 +16,7 @@ public:
 protected:
 
     BaseSubject(void);
+    virtual ~BaseSubject(void) {};
 
     void notify(void);
 

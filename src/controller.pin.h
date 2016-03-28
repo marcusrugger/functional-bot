@@ -9,6 +9,7 @@ class AnalogPinReader
 public:
 
     virtual int16_t readPin(void) = 0;
+    virtual AnalogPinReader *clone(void) const = 0;
 
 };
 
@@ -21,6 +22,9 @@ public:
 
     int16_t readPin(void)
     { return analogRead(_pin); }
+
+    AnalogPinReader *clone(void) const
+    { return new ControllerPin(_pin); }
 
 private:
 

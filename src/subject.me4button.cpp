@@ -8,6 +8,28 @@ Me4ButtonSubject::Me4ButtonSubject(AnalogPinReader *pin)
 {}
 
 
+Me4ButtonSubject::Me4ButtonSubject(const Me4ButtonSubject &that)
+:   BaseSubject(),
+    _pin(that._pin->clone()),
+    _buttonState(that._buttonState)
+{}
+
+
+Me4ButtonSubject::Me4ButtonSubject(Me4ButtonSubject &&that)
+:   BaseSubject(),
+    _pin(that._pin),
+    _buttonState(that._buttonState)
+{
+    that._pin = NULL;
+}
+
+
+Me4ButtonSubject::~Me4ButtonSubject(void)
+{
+    if (_pin) delete _pin;
+}
+
+
 void Me4ButtonSubject::operator()(void)
 {
     BUTTONS newState = translatePin(_pin->readPin());

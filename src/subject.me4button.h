@@ -11,6 +11,9 @@ class Me4ButtonSubject : public BaseSubject
 public:
 
     Me4ButtonSubject(AnalogPinReader *pin);
+    Me4ButtonSubject(const Me4ButtonSubject &that);
+    Me4ButtonSubject(Me4ButtonSubject &&that);
+    ~Me4ButtonSubject(void);
 
     void operator()(void);
 
