@@ -22,8 +22,8 @@ private:
     bool _buttonState;
 
 
-    inline bool isWatchingButton(Me4ButtonSubject::BUTTONS button)
-    { return button == _button; }
+    bool isWatchingButton(Me4ButtonSubject::BUTTONS button);
+    void changeState(bool newState);
 
 };
 

@@ -11,21 +11,25 @@ Me1ButtonSubject::Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::
 
 void Me1ButtonSubject::operator()(void)
 {
-    Me4ButtonSubject::BUTTONS newState = _subject.getState();
+    Me4ButtonSubject::BUTTONS newButtonState = _subject.getState();
 
-    if (isWatchingButton(newState))
-    {
-        _buttonState = true;
-        notify();
-    }
-    else
-    {
-        if (_buttonState)
-        {
-            _buttonState = false;
-            notify();
-        }
-    }
+    if (isWatchingButton(newButtonState))
+        changeState(true);
+    else if (_buttonState)
+        changeState(false);
+}
+
+
+bool Me1ButtonSubject::isWatchingButton(Me4ButtonSubject::BUTTONS button)
+{
+    return button == _button;
+}
+
+
+void Me1ButtonSubject::changeState(bool newState)
+{
+    _buttonState = newState;
+    notify();
 }
 
 
