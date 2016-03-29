@@ -33,21 +33,21 @@ RobotFabricator::RobotFabricator(void)
 void RobotFabricator::buildDisplayAnimator(void)
 {
     Runnable animator(assembleDisplayAnimator(2, 8));
-    schedule(100, animator);
+    subscribe(100, animator);
 }
 
 
 void RobotFabricator::buildMatrixAnimator(void)
 {
     Runnable animator(assembleMatrixAnimator(12, 13));
-    schedule(100, animator);
+    subscribe(100, animator);
 }
 
 
 void RobotFabricator::buildDisplayPin(void)
 {
     Runnable pinwriter(assembleDisplayAnalogPin(A0, 2, 8));
-    schedule(100, pinwriter);
+    subscribe(100, pinwriter);
 }
 
 
@@ -98,10 +98,10 @@ Runnable RobotFabricator::assembleMatrixDisplayAnalogPin(uint8_t pinNumber, uint
 }
 
 
-void RobotFabricator::schedule(uint16_t time, Runnable task)
+void RobotFabricator::subscribe(uint16_t time, Runnable task)
 {
     TaskTimer timer(time, task);
-    _scheduler.schedule(timer);
+    _scheduler.subscribe(timer);
 }
 
 

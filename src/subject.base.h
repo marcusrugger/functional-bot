@@ -9,8 +9,8 @@ class BaseSubject : public Subject
 {
 public:
 
-    void attach(Observer observer);
-    void detach(Observer observer);
+    void subscribe(Observer observer);
+    void unsubscribe(Observer observer);
 
 
 protected:

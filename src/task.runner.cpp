@@ -12,14 +12,14 @@ void TaskRunner::operator()(void)
 }
 
 
-void TaskRunner::schedule(Runnable task)
+void TaskRunner::subscribe(Runnable task)
 {
     Tasks::iterator it = std::find(_tasks.begin(), _tasks.end(), task);
     if (it == _tasks.end()) _tasks.push_back(task);
 }
 
 
-void TaskRunner::unschedule(Runnable task)
+void TaskRunner::unsubscribe(Runnable task)
 {
     _tasks.erase(std::remove(_tasks.begin(), _tasks.end(), task), _tasks.end());
 }

@@ -13,8 +13,8 @@ public:
 
     void operator()(void);
 
-    void schedule(Runnable task);
-    void unschedule(Runnable task);
+    void subscribe(Runnable task);
+    void unsubscribe(Runnable task);
 
 private:
 
