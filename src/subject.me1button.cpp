@@ -1,8 +1,8 @@
 #include "subject.me1button.h"
 
 
-Me1ButtonSubject::Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON buttonToWatch)
-:   BaseSubject(),
+Me1ButtonSubject::Me1ButtonSubject(Observer observer, Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON buttonToWatch)
+:   _notice(observer),
     _subject(subject),
     _watchedButton(buttonToWatch),
     _buttonState(BUTTON_RELEASED)
@@ -29,7 +29,7 @@ void Me1ButtonSubject::setButtonState(BUTTON_STATE newState)
     if (_buttonState != newState)
     {
         _buttonState = newState;
-        notify();
+        _notice();
     }
 }
 

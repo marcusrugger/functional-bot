@@ -4,7 +4,7 @@
 #include "subject.me4button.h"
 
 
-class Me1ButtonSubject : public BaseSubject
+class Me1ButtonSubject
 {
 public:
 
@@ -14,7 +14,7 @@ public:
         BUTTON_PRESSED
     };
 
-    Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON buttonToWatch);
+    Me1ButtonSubject(Observer observer, Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON buttonToWatch);
 
     void operator()(void);
 
@@ -23,6 +23,7 @@ public:
 
 private:
 
+    Observer _notice;
     Me4ButtonSubject &_subject;
     Me4ButtonSubject::BUTTON _watchedButton;
     BUTTON_STATE _buttonState;

@@ -1,25 +1,20 @@
-#ifndef SUBJECT_BASE_H
-#define SUBJECT_BASE_H
+#ifndef TASK_NOTIFIER_H
+#define TASK_NOTIFIER_H
 
 #include "interfaces.h"
 #include <vector>
 
 
-class BaseSubject : public Subject
+class Notifier : public Subject
 {
 public:
+
+    Notifier(void);
 
     void subscribe(Observer observer);
     void unsubscribe(Observer observer);
 
-
-protected:
-
-    BaseSubject(void);
-    virtual ~BaseSubject(void) {};
-
-
-    void notify(void);
+    void operator()(void);
 
 
 private:
@@ -28,5 +23,6 @@ private:
     Observers _observers;
 
 };
+
 
 #endif

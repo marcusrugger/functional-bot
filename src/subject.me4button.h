@@ -3,15 +3,14 @@
 
 #include "interfaces.h"
 #include "controller.pin.h"
-#include "subject.base.h"
 #include <memory>
 
 
-class Me4ButtonSubject : public BaseSubject
+class Me4ButtonSubject
 {
 public:
 
-    Me4ButtonSubject(AnalogPinReader *pin);
+    Me4ButtonSubject(Observer observer, AnalogPinReader *pin);
     Me4ButtonSubject(const Me4ButtonSubject &that);
     Me4ButtonSubject(Me4ButtonSubject &&that);
 
@@ -31,6 +30,7 @@ public:
 
 private:
 
+    Observer _notice;
     std::auto_ptr<AnalogPinReader> _pin;
     BUTTON _buttonState;
 

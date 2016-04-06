@@ -1,24 +1,24 @@
-#include "subject.base.h"
+#include "task.notifier.h"
 
 
-BaseSubject::BaseSubject(void)
+Notifier::Notifier(void)
 {}
 
 
-void BaseSubject::subscribe(Observer observer)
+void Notifier::subscribe(Observer observer)
 {
     if (std::find(_observers.begin(), _observers.end(), observer) == _observers.end())
         _observers.push_back(observer);
 }
 
 
-void BaseSubject::unsubscribe(Observer observer)
+void Notifier::unsubscribe(Observer observer)
 {
     _observers.erase(std::remove(_observers.begin(), _observers.end(), observer), _observers.end());
 }
 
 
-void BaseSubject::notify(void)
+void Notifier::operator()(void)
 {
-    for (auto observer : _observers) observer();
+    for (auto notify : _observers) notify();
 }

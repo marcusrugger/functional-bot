@@ -1,22 +1,22 @@
 #include "subject.me4button.h"
 
 
-Me4ButtonSubject::Me4ButtonSubject(AnalogPinReader *pin)
-:   BaseSubject(),
+Me4ButtonSubject::Me4ButtonSubject(Observer observer, AnalogPinReader *pin)
+:   _notice(observer),
     _pin(pin),
     _buttonState(BUTTON_NONE)
 {}
 
 
 Me4ButtonSubject::Me4ButtonSubject(const Me4ButtonSubject &that)
-:   BaseSubject(),
+:   _notice(that._notice),
     _pin(that._pin->clone()),
     _buttonState(that._buttonState)
 {}
 
 
 Me4ButtonSubject::Me4ButtonSubject(Me4ButtonSubject &&that)
-:   BaseSubject(),
+:   _notice(that._notice),
     _pin(that._pin.release()),
     _buttonState(that._buttonState)
 {}
@@ -29,7 +29,7 @@ void Me4ButtonSubject::operator()(void)
     if (newState != _buttonState)
     {
         _buttonState = newState;
-        notify();
+        _notice();
     }
 }
 
