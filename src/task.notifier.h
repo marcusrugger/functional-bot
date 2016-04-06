@@ -5,21 +5,34 @@
 #include <vector>
 
 
-class Notifier : public Subject
+template<typename SUBJECT>
+class Notifier
 {
 public:
 
+    using OBSERVER = vl::Func<void(SUBJECT *)>;
+
     Notifier(void);
 
-    void subscribe(Observer observer);
-    void unsubscribe(Observer observer);
+    void subscribe(OBSERVER observer)
+    {
+        if (std::find(_observers.begin(), _observers.end(), observer) == _observers.end())
+            _observers.push_back(observer);
+    }
 
-    void operator()(void);
+    void unsubscribe(OBSERVER observer)
+    {
+        _observers.erase(std::remove(_observers.begin(), _observers.end(), observer), _observers.end());
+    }
+
+
+    void operator()(SUBJECT *subject)
+    { for (auto notice : _observers) notice(subject); }
 
 
 private:
 
-    using Observers = std::vector<Observer>;
+    using Observers = std::vector<OBSERVER>;
     Observers _observers;
 
 };

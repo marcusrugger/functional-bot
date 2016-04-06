@@ -1,7 +1,7 @@
 #include "subject.me4button.h"
 
 
-Me4ButtonSubject::Me4ButtonSubject(Observer observer, AnalogPinReader *pin)
+Me4ButtonSubject::Me4ButtonSubject(OBSERVER observer, AnalogPinReader *pin)
 :   _notice(observer),
     _pin(pin),
     _buttonState(BUTTON_NONE)
@@ -29,14 +29,8 @@ void Me4ButtonSubject::operator()(void)
     if (newState != _buttonState)
     {
         _buttonState = newState;
-        _notice();
+        _notice(this);
     }
-}
-
-
-Me4ButtonSubject::BUTTON Me4ButtonSubject::getState(void)
-{
-    return _buttonState;
 }
 
 

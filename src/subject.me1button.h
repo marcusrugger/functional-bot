@@ -8,23 +8,24 @@ class Me1ButtonSubject
 {
 public:
 
+    using OBSERVER = vl::Func<void(Me1ButtonSubject *)>;
+
     enum BUTTON_STATE
     {
         BUTTON_RELEASED,
         BUTTON_PRESSED
     };
 
-    Me1ButtonSubject(Observer observer, Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON buttonToWatch);
+    Me1ButtonSubject(OBSERVER observer, Me4ButtonSubject::BUTTON buttonToWatch);
 
-    void operator()(void);
+    void operator()(Me4ButtonSubject *subject);
 
     BUTTON_STATE getState(void);
 
 
 private:
 
-    Observer _notice;
-    Me4ButtonSubject &_subject;
+    OBSERVER _notice;
     Me4ButtonSubject::BUTTON _watchedButton;
     BUTTON_STATE _buttonState;
 

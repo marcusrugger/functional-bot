@@ -3,6 +3,7 @@
 
 #include "interfaces.h"
 #include "controller.pin.h"
+#include "task.notifier.h"
 #include <memory>
 
 
@@ -10,7 +11,9 @@ class Me4ButtonSubject
 {
 public:
 
-    Me4ButtonSubject(Observer observer, AnalogPinReader *pin);
+    using OBSERVER = vl::Func<void(Me4ButtonSubject *)>;
+
+    Me4ButtonSubject(OBSERVER observer, AnalogPinReader *pin);
     Me4ButtonSubject(const Me4ButtonSubject &that);
     Me4ButtonSubject(Me4ButtonSubject &&that);
 
@@ -25,12 +28,13 @@ public:
         BUTTON_4    = 0x08
     };
 
-    BUTTON getState(void);
+    inline BUTTON getState(void)
+    { return _buttonState; }
 
 
 private:
 
-    Observer _notice;
+    OBSERVER _notice;
     std::auto_ptr<AnalogPinReader> _pin;
     BUTTON _buttonState;
 
