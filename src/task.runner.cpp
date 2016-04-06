@@ -14,8 +14,8 @@ void TaskRunner::operator()(void)
 
 void TaskRunner::subscribe(Runnable task)
 {
-    Tasks::iterator it = std::find(_tasks.begin(), _tasks.end(), task);
-    if (it == _tasks.end()) _tasks.push_back(task);
+    if (std::find(_tasks.begin(), _tasks.end(), task) == _tasks.end())
+        _tasks.push_back(task);
 }
 
 

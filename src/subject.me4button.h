@@ -17,7 +17,7 @@ public:
 
     void operator()(void);
 
-    enum BUTTONS
+    enum BUTTON
     {
         BUTTON_NONE = 0x00,
         BUTTON_1    = 0x01,
@@ -26,15 +26,15 @@ public:
         BUTTON_4    = 0x08
     };
 
-    BUTTONS getState(void);
+    BUTTON getState(void);
 
 
 private:
 
     std::auto_ptr<AnalogPinReader> _pin;
-    BUTTONS _buttonState;
+    BUTTON _buttonState;
 
-    BUTTONS translatePin(uint16_t pinValue);
+    BUTTON translatePin(uint16_t pinValue);
 
 };
 

@@ -7,8 +7,8 @@ BaseSubject::BaseSubject(void)
 
 void BaseSubject::subscribe(Observer observer)
 {
-    Observers::iterator it = std::find(_observers.begin(), _observers.end(), observer);
-    if (it == _observers.end()) _observers.push_back(observer);
+    if (std::find(_observers.begin(), _observers.end(), observer) == _observers.end())
+        _observers.push_back(observer);
 }
 
 

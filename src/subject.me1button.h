@@ -8,7 +8,7 @@ class Me1ButtonSubject : public BaseSubject
 {
 public:
 
-    Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTONS button);
+    Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON button);
 
     void operator()(void);
 
@@ -18,11 +18,11 @@ public:
 private:
 
     Me4ButtonSubject &_subject;
-    Me4ButtonSubject::BUTTONS _button;
+    Me4ButtonSubject::BUTTON _button;
     bool _buttonState;
 
 
-    bool isWatchingButton(Me4ButtonSubject::BUTTONS button);
+    bool isWatchingButton(Me4ButtonSubject::BUTTON button);
     void changeState(bool newState);
 
 };

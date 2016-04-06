@@ -24,7 +24,7 @@ Me4ButtonSubject::Me4ButtonSubject(Me4ButtonSubject &&that)
 
 void Me4ButtonSubject::operator()(void)
 {
-    BUTTONS newState = translatePin(_pin->readPin());
+    BUTTON newState = translatePin(_pin->readPin());
 
     if (newState != _buttonState)
     {
@@ -34,13 +34,13 @@ void Me4ButtonSubject::operator()(void)
 }
 
 
-Me4ButtonSubject::BUTTONS Me4ButtonSubject::getState(void)
+Me4ButtonSubject::BUTTON Me4ButtonSubject::getState(void)
 {
     return _buttonState;
 }
 
 
-Me4ButtonSubject::BUTTONS Me4ButtonSubject::translatePin(uint16_t pinValue)
+Me4ButtonSubject::BUTTON Me4ButtonSubject::translatePin(uint16_t pinValue)
 {
     uint16_t value = pinValue / 100;
 

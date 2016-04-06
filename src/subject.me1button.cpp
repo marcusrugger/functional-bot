@@ -1,7 +1,7 @@
 #include "subject.me1button.h"
 
 
-Me1ButtonSubject::Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTONS button)
+Me1ButtonSubject::Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON button)
 :   BaseSubject(),
     _subject(subject),
     _button(button),
@@ -11,7 +11,7 @@ Me1ButtonSubject::Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::
 
 void Me1ButtonSubject::operator()(void)
 {
-    Me4ButtonSubject::BUTTONS newButtonState = _subject.getState();
+    Me4ButtonSubject::BUTTON newButtonState = _subject.getState();
 
     if (isWatchingButton(newButtonState))
         changeState(true);
@@ -20,7 +20,7 @@ void Me1ButtonSubject::operator()(void)
 }
 
 
-bool Me1ButtonSubject::isWatchingButton(Me4ButtonSubject::BUTTONS button)
+bool Me1ButtonSubject::isWatchingButton(Me4ButtonSubject::BUTTON button)
 {
     return button == _button;
 }
