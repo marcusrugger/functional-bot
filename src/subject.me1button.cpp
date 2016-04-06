@@ -1,39 +1,40 @@
 #include "subject.me1button.h"
 
 
-Me1ButtonSubject::Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON button)
+Me1ButtonSubject::Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON buttonToWatch)
 :   BaseSubject(),
     _subject(subject),
-    _button(button),
-    _buttonState(false)
+    _watchedButton(buttonToWatch),
+    _buttonState(BUTTON_RELEASED)
 {}
 
 
 void Me1ButtonSubject::operator()(void)
 {
-    Me4ButtonSubject::BUTTON newButtonState = _subject.getState();
-
-    if (isWatchingButton(newButtonState))
-        changeState(true);
-    else if (_buttonState)
-        changeState(false);
+    evaluateNewPanelState(_subject.getState());
 }
 
 
-bool Me1ButtonSubject::isWatchingButton(Me4ButtonSubject::BUTTON button)
+void Me1ButtonSubject::evaluateNewPanelState(Me4ButtonSubject::BUTTON panelState)
 {
-    return button == _button;
+    if (panelState == _watchedButton)
+        setButtonState(BUTTON_PRESSED);
+    else
+        setButtonState(BUTTON_RELEASED);
 }
 
 
-void Me1ButtonSubject::changeState(bool newState)
+void Me1ButtonSubject::setButtonState(BUTTON_STATE newState)
 {
-    _buttonState = newState;
-    notify();
+    if (_buttonState != newState)
+    {
+        _buttonState = newState;
+        notify();
+    }
 }
 
 
-bool Me1ButtonSubject::getState(void)
+Me1ButtonSubject::BUTTON_STATE Me1ButtonSubject::getState(void)
 {
     return _buttonState;
 }

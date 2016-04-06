@@ -8,22 +8,27 @@ class Me1ButtonSubject : public BaseSubject
 {
 public:
 
-    Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON button);
+    enum BUTTON_STATE
+    {
+        BUTTON_RELEASED,
+        BUTTON_PRESSED
+    };
+
+    Me1ButtonSubject(Me4ButtonSubject &subject, Me4ButtonSubject::BUTTON buttonToWatch);
 
     void operator()(void);
 
-    bool getState(void);
+    BUTTON_STATE getState(void);
 
 
 private:
 
     Me4ButtonSubject &_subject;
-    Me4ButtonSubject::BUTTON _button;
-    bool _buttonState;
+    Me4ButtonSubject::BUTTON _watchedButton;
+    BUTTON_STATE _buttonState;
 
-
-    bool isWatchingButton(Me4ButtonSubject::BUTTON button);
-    void changeState(bool newState);
+    void evaluateNewPanelState(Me4ButtonSubject::BUTTON panelState);
+    void setButtonState(BUTTON_STATE newState);
 
 };
 
