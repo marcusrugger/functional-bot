@@ -13,10 +13,11 @@ enum BUTTON_STATE
 };
 
 
-using Idleloop = vl::Func<void(void)>;
-using Runnable = vl::Func<void(void)>;
-using Command  = vl::Func<void(void)>;
-using Observer = vl::Func<void(void)>;
+using Idleloop   = vl::Func<void(void)>;
+using Runnable   = vl::Func<void(void)>;
+using Command    = vl::Func<void(void)>;
+using Observer   = vl::Func<void(void)>;
+using SinkUint16 = vl::Func<void(uint16_t)>;
 
 
 template<class T>
