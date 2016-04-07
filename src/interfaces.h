@@ -13,11 +13,12 @@ enum BUTTON_STATE
 };
 
 
-using Idleloop   = vl::Func<void(void)>;
-using Runnable   = vl::Func<void(void)>;
-using Command    = vl::Func<void(void)>;
-using Observer   = vl::Func<void(void)>;
-using SinkUint16 = vl::Func<void(uint16_t)>;
+using Idleloop      = vl::Func<void(void)>;
+using Runnable      = vl::Func<void(void)>;
+using Command       = vl::Func<void(void)>;
+using Observer      = vl::Func<void(void)>;
+using SinkUint16    = vl::Func<void(uint16_t)>;
+using SourceUint16  = vl::Func<uint16_t(void)>;
 
 
 template<class T>
@@ -84,8 +85,7 @@ public:
     virtual ~BuildFabricator(void) {}
 
     virtual void buildDisplayAnimator(void) = 0;
-    virtual void buildMatrixAnimator(void) = 0;
-    virtual void buildDisplayPin(void) = 0;
+
 };
 
 

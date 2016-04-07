@@ -37,20 +37,6 @@ void RobotFabricator::buildDisplayAnimator(void)
 }
 
 
-void RobotFabricator::buildMatrixAnimator(void)
-{
-    Runnable animator(assembleMatrixAnimator(12, 13));
-    subscribe(100, animator);
-}
-
-
-void RobotFabricator::buildDisplayPin(void)
-{
-    Runnable pinwriter(assembleDisplayAnalogPin(A0, 2, 8));
-    subscribe(100, pinwriter);
-}
-
-
 Runnable RobotFabricator::assembleDisplayAnimator(uint8_t Scl, uint8_t Sda)
 {
     SegmentDisplayProtocol serializer(createSegmentDisplayProtocol(Scl, Sda));
@@ -60,48 +46,35 @@ Runnable RobotFabricator::assembleDisplayAnimator(uint8_t Scl, uint8_t Sda)
 }
 
 
-Runnable RobotFabricator::assembleMatrixAnimator(uint8_t Scl, uint8_t Sda)
+SinkUint16 RobotFabricator::assembleSegmentedDisplayDecimal(uint8_t scl, uint8_t sda)
 {
-    MeLEDMatrixProtocol serializer(createMeLEDMatrixProtocol(Scl, Sda));
-    DisplayAnimatorTask animator;
+    SegmentDisplayProtocol serialize(createSegmentDisplayProtocol(scl, sda));
+    DecEncoder encode(Me7SegmentEncoder::encodeDec);
 
-    return [=]() mutable { serializer(animator()); };
+    return [=](uint16_t value) mutable { serialize(encode(value)); };
 }
 
 
-Runnable RobotFabricator::assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda)
+SinkUint16 RobotFabricator::assembleMatrixDisplayDecimal(uint8_t scl, uint8_t sda)
 {
-    SegmentDisplayProtocol serializer(createSegmentDisplayProtocol(Scl, Sda));
-    DecEncoder encoder(Me7SegmentEncoder::encodeDec);
-    ControllerPin pin(pinNumber);
+    MeLEDMatrixProtocol serialize(createMeLEDMatrixProtocol(scl, sda));
+    MatrixDecEncoder encode(MeLEDMatrixEncoder::encodeDec);
 
-    return [=]() mutable { serializer(encoder(pin.readPin())); };
+    return [=](uint16_t value) mutable { serialize(encode(value)); };
 }
 
 
-Runnable RobotFabricator::assembleMatrixDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda)
+Runnable RobotFabricator::assembleMe4ButtonPanel(SourceUint16 source, Me4Button::PROCESSOR observer)
 {
-    SegmentDisplayProtocol serializer1(createSegmentDisplayProtocol(2, 8));
-    DecEncoder encoder1(Me7SegmentEncoder::encodeDec);
+    Me4ButtonSubject setButtonState(observer);
 
-    MeLEDMatrixProtocol serializer2(createMeLEDMatrixProtocol(Scl, Sda));
-    MatrixDecEncoder encoder2(MeLEDMatrixEncoder::encodeDec);
-
-    ControllerPin pin(pinNumber);
-
-    return [=]() mutable
-    {
-        uint16_t pinValue = pin.readPin();
-        serializer1(encoder1(pinValue));
-        serializer2(encoder2(pinValue));
-    };
+    return [=](void) mutable { setButtonState(Me4Button::translatePin(source())); };
 }
 
 
 void RobotFabricator::subscribe(uint16_t time, Runnable task)
 {
-    TaskTimer timer(time, task);
-    _scheduler.subscribe(timer);
+    _scheduler.subscribe( TaskTimer(time, task) );
 }
 
 

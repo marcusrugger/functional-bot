@@ -2,6 +2,8 @@
 #define BUILD_ROBOTFABRICATOR_H
 
 #include "interfaces.h"
+#include "subject.me4button.h"
+#include "subject.me1button.h"
 #include "task.runner.h"
 #include <memory>
 
@@ -17,8 +19,6 @@ public:
     RobotFabricator(void);
 
     void buildDisplayAnimator(void);
-    void buildMatrixAnimator(void);
-    void buildDisplayPin(void);
 
     Idleloop getIdleloop(void);
 
@@ -27,10 +27,10 @@ protected:
 
     void subscribe(uint16_t time, Runnable task);
 
-    Runnable   assembleDisplayAnimator(uint8_t Scl, uint8_t Sda);
-    Runnable   assembleMatrixAnimator(uint8_t Scl, uint8_t Sda);
-    Runnable   assembleDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda);
-    Runnable   assembleMatrixDisplayAnalogPin(uint8_t pinNumber, uint8_t Scl, uint8_t Sda);
+    Runnable    assembleDisplayAnimator(uint8_t Scl, uint8_t Sda);
+    SinkUint16  assembleSegmentedDisplayDecimal(uint8_t scl, uint8_t sda);
+    SinkUint16  assembleMatrixDisplayDecimal(uint8_t scl, uint8_t sda);
+    Runnable    assembleMe4ButtonPanel(SourceUint16 source, Me4Button::PROCESSOR observer);
 
     MeLEDMatrixProtocol     createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda);
     SegmentDisplayProtocol  createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda);

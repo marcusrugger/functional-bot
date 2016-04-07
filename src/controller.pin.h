@@ -8,15 +8,31 @@ class AnalogPinReader
 {
 public:
 
-    virtual ~AnalogPinReader(void) {}
+    AnalogPinReader(uint8_t pinNumber) : _pinNumber(pinNumber) {}
 
-    virtual int16_t readPin(void) const = 0;
-    virtual AnalogPinReader *clone(void) const = 0;
+    uint16_t operator()(void) const
+    { return analogRead(_pinNumber); }
+
+private:
+
+    uint8_t _pinNumber;
 
 };
 
 
-class ControllerPin : public AnalogPinReader
+class BaseAnalogPinReader
+{
+public:
+
+    virtual ~BaseAnalogPinReader(void) {}
+
+    virtual int16_t readPin(void) const = 0;
+    virtual BaseAnalogPinReader *clone(void) const = 0;
+
+};
+
+
+class ControllerPin : public BaseAnalogPinReader
 {
 public:
 
@@ -25,7 +41,7 @@ public:
     int16_t readPin(void) const
     { return analogRead(_pin); }
 
-    AnalogPinReader *clone(void) const
+    BaseAnalogPinReader *clone(void) const
     { return new ControllerPin(_pin); }
 
 private:
@@ -102,6 +118,63 @@ public:
 
     DigitalPin *clone(void)
     { return new ControllerDigitalPin(*this); }
+
+
+private:
+
+    uint8_t _pin;
+    uint8_t _mode;
+    bool _pullup;
+
+    void setMode(uint8_t mode)
+    {
+        _mode = mode;
+        pinMode(_pin, mode);
+    }
+
+    void setReadMode(void)
+    {
+        if (OUTPUT == _mode)
+            setMode(pullupMode());
+    }
+
+    void setWriteMode(void)
+    {
+        if (OUTPUT != _mode)
+            setMode(OUTPUT);
+    }
+
+    int pullupMode(void)
+    {
+        return _pullup ? INPUT_PULLUP : INPUT;
+    }
+
+};
+
+
+class DigitalPinFunctor
+{
+public:
+
+    DigitalPinFunctor(uint8_t pinNumber, bool pullup = false)
+    :   _pin(pinNumber),
+        _pullup(pullup)
+    {
+        setMode(OUTPUT);
+    }
+
+
+    void operator()(bool value)
+    {
+        setWriteMode();
+        digitalWrite(_pin, value ? HIGH : LOW);
+    }
+
+    bool operator()(void)
+    {
+        setReadMode();
+        return digitalRead(_pin) == HIGH;
+    }
 
 
 private:
