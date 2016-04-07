@@ -16,7 +16,7 @@ public:
         BUTTON_PRESSED
     };
 
-    Me1ButtonSubject(OBSERVER observer, Me4ButtonSubject::BUTTON buttonToWatch);
+    Me1ButtonSubject(OBSERVER observer, Me4Button::BUTTON buttonToWatch);
 
     void operator()(Me4ButtonSubject *subject);
 
@@ -26,10 +26,10 @@ public:
 private:
 
     OBSERVER _notice;
-    Me4ButtonSubject::BUTTON _watchedButton;
+    Me4Button::BUTTON _watchedButton;
     BUTTON_STATE _buttonState;
 
-    void evaluateNewPanelState(Me4ButtonSubject::BUTTON panelState);
+    void evaluateNewPanelState(Me4Button::BUTTON panelState);
     void setButtonState(BUTTON_STATE newState);
 
 };

@@ -3,19 +3,11 @@
 
 #include "interfaces.h"
 #include "controller.pin.h"
-#include "task.notifier.h"
-#include <memory>
 
 
-class Me4ButtonSubject
+class Me4Button
 {
 public:
-
-    using OBSERVER = vl::Func<void(Me4ButtonSubject *)>;
-
-    Me4ButtonSubject(OBSERVER observer);
-
-    void operator()(int16_t pinValue);
 
     enum BUTTON
     {
@@ -26,17 +18,48 @@ public:
         BUTTON_4    = 0x08
     };
 
-    inline BUTTON getState(void)
+    static BUTTON translatePin(uint16_t pinValue)
+    {
+        uint16_t value = pinValue / 100;
+
+        switch (value)
+        {
+            case 0:  return BUTTON_1;
+            case 4:  return BUTTON_2;
+            case 6:  return BUTTON_3;
+            case 7:  return BUTTON_4;
+            default: return BUTTON_NONE;
+        }
+    }
+
+};
+
+
+class Me4ButtonSubject
+{
+public:
+
+    using OBSERVER = vl::Func<void(Me4ButtonSubject *)>;
+
+    Me4ButtonSubject(OBSERVER observer);
+
+    void operator()(Me4Button::BUTTON newState)
+    {
+        if (newState != _buttonState)
+        {
+            _buttonState = newState;
+            _notice(this);
+        }
+    }
+
+    inline Me4Button::BUTTON getState(void)
     { return _buttonState; }
 
 
 private:
 
     OBSERVER _notice;
-    BUTTON _buttonState;
-
-    BUTTON translatePin(uint16_t pinValue);
-    void setState(BUTTON newState);
+    Me4Button::BUTTON _buttonState;
 
 };
 
