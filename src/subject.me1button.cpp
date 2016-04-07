@@ -8,13 +8,7 @@ Me1ButtonSubject::Me1ButtonSubject(OBSERVER observer, Me4Button::BUTTON buttonTo
 {}
 
 
-void Me1ButtonSubject::operator()(Me4ButtonSubject *subject)
-{
-    evaluateNewPanelState(subject->getState());
-}
-
-
-void Me1ButtonSubject::evaluateNewPanelState(Me4Button::BUTTON panelState)
+void Me1ButtonSubject::operator()(Me4Button::BUTTON panelState)
 {
     if (panelState == _watchedButton)
         setButtonState(BUTTON_PRESSED);
@@ -28,12 +22,6 @@ void Me1ButtonSubject::setButtonState(BUTTON_STATE newState)
     if (newState != _buttonState)
     {
         _buttonState = newState;
-        _notice(this);
+        _notice(_buttonState);
     }
-}
-
-
-Me1ButtonSubject::BUTTON_STATE Me1ButtonSubject::getState(void)
-{
-    return _buttonState;
 }

@@ -12,7 +12,7 @@ public:
 
     using OBSERVER = vl::Func<void(SUBJECT)>;
 
-    Notifier(void);
+    Notifier(void) {}
 
     void subscribe(OBSERVER observer)
     {

@@ -6,6 +6,13 @@
 #include <functional-vlpp.h>
 
 
+enum BUTTON_STATE
+{
+    BUTTON_RELEASED,
+    BUTTON_PRESSED
+};
+
+
 using Idleloop = vl::Func<void(void)>;
 using Runnable = vl::Func<void(void)>;
 using Command  = vl::Func<void(void)>;
