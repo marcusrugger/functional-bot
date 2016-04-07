@@ -11,7 +11,7 @@ class SegmentDisplayProtocol : public I2CProtocol
 {
 public:
 
-    SegmentDisplayProtocol(DigitalPin *pinScl, DigitalPin *pinSda);
+    SegmentDisplayProtocol(DigitalPin pinScl, DigitalPin pinSda);
 
     template<typename ITERABLE>
     void operator()(ITERABLE data)

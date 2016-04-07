@@ -12,16 +12,16 @@
 
 MeLEDMatrixProtocol RobotFabricator::createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda)
 {
-    DigitalPin *pinScl = new ControllerDigitalPin(Scl);
-    DigitalPin *pinSda = new ControllerDigitalPin(Sda);
+    DigitalPin pinScl(Scl);
+    DigitalPin pinSda(Sda);
     return MeLEDMatrixProtocol(pinScl, pinSda);
 }
 
 
 SegmentDisplayProtocol RobotFabricator::createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda)
 {
-    DigitalPin *pinScl = new ControllerDigitalPin(Scl);
-    DigitalPin *pinSda = new ControllerDigitalPin(Sda);
+    DigitalPin pinScl(Scl);
+    DigitalPin pinSda(Sda);
     return SegmentDisplayProtocol(pinScl, pinSda);
 }
 

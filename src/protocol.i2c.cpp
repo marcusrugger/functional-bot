@@ -1,25 +1,12 @@
 #include "protocol.i2c.h"
 
 
-I2CProtocol::I2CProtocol(DigitalPin *pinScl, DigitalPin *pinSda)
+I2CProtocol::I2CProtocol(DigitalPin pinScl, DigitalPin pinSda)
 :   _pinScl(pinScl),
     _pinSda(pinSda)
 {
-    _pinScl->setLow();
-    _pinSda->setLow();
-}
-
-
-I2CProtocol::I2CProtocol(const I2CProtocol &src)
-:   _pinScl(src._pinScl->clone()),
-    _pinSda(src._pinSda->clone())
-{}
-
-
-I2CProtocol::~I2CProtocol(void)
-{
-    delete _pinScl;
-    delete _pinSda;
+    _pinScl(LOW);
+    _pinSda(LOW);
 }
 
 
@@ -31,18 +18,18 @@ void I2CProtocol::bitDelay(void)
 
 void I2CProtocol::start(void)
 {
-    _pinSda->setHigh();
-    _pinScl->setHigh();     bitDelay();
-    _pinSda->setLow();      bitDelay();
-    _pinScl->setLow();
+    _pinSda(HIGH);
+    _pinScl(HIGH);     bitDelay();
+    _pinSda(LOW);      bitDelay();
+    _pinScl(LOW);
 }
 
 
 void I2CProtocol::stop(void)
 {
-    _pinSda->setLow();      bitDelay();
-    _pinScl->setHigh();     bitDelay();
-    _pinSda->setHigh();
+    _pinSda(LOW);      bitDelay();
+    _pinScl(HIGH);     bitDelay();
+    _pinSda(HIGH);
 }
 
 
@@ -60,9 +47,9 @@ void I2CProtocol::writeByte(uint8_t data)
 
 void I2CProtocol::writeBit(uint8_t data)
 {
-    _pinScl->setLow();
-    _pinSda->set(data);
-    _pinScl->setHigh();
+    _pinScl(LOW);
+    _pinSda(data);
+    _pinScl(HIGH);
 
     bitDelay();
     stretchClock();
@@ -71,19 +58,19 @@ void I2CProtocol::writeBit(uint8_t data)
 
 void I2CProtocol::lookForAck(void)
 {
-    _pinScl->setLow();
-    _pinSda->setHigh();     bitDelay();
-    _pinScl->setHigh();
+    _pinScl(LOW);
+    _pinSda(HIGH);     bitDelay();
+    _pinScl(HIGH);
 
     stretchClock();
 
-    _pinScl->setLow();
-    _pinSda->setLow();
+    _pinScl(LOW);
+    _pinSda(LOW);
 }
 
 
 void I2CProtocol::stretchClock(void)
 {
-    for (int cnt = 0; !_pinScl->get() && cnt < 20; cnt++)
+    for (int cnt = 0; !_pinScl() && cnt < 20; cnt++)
         bitDelay();
 }

@@ -1,12 +1,12 @@
 #include "protocol.meledmatrix.h"
 
 
-MeLEDMatrixProtocol::MeLEDMatrixProtocol(DigitalPin *pinScl, DigitalPin *pinSda)
+MeLEDMatrixProtocol::MeLEDMatrixProtocol(SinkBool pinScl, SinkBool pinSda)
 :   _pinScl(pinScl),
     _pinSda(pinSda)
 {
-    _pinScl->setHigh();
-    _pinSda->setHigh();
+    _pinScl(HIGH);
+    _pinSda(HIGH);
 
     start();
     writeByte(ADDR_AUTO);
@@ -31,17 +31,17 @@ void MeLEDMatrixProtocol::clearMatrix(void)
 
 void MeLEDMatrixProtocol::start()
 {
-    _pinScl->setHigh();
-    _pinSda->setLow();
+    _pinScl(HIGH);
+    _pinSda(LOW);
 }
 
 
 void MeLEDMatrixProtocol::stop()
 {
-    _pinScl->setLow();
-    _pinSda->setLow();
-    _pinScl->setHigh();
-    _pinSda->setHigh();
+    _pinScl(LOW);
+    _pinSda(LOW);
+    _pinScl(HIGH);
+    _pinSda(HIGH);
 }
 
 
@@ -57,7 +57,7 @@ void MeLEDMatrixProtocol::writeByte(uint8_t data)
 
 void MeLEDMatrixProtocol::writeBit(bool bit)
 {
-    _pinScl->setLow();
-    _pinSda->set(bit);
-    _pinScl->setHigh();
+    _pinScl(LOW);
+    _pinSda(bit);
+    _pinScl(HIGH);
 }

@@ -11,7 +11,7 @@ class MeLEDMatrixProtocol
 {
 public:
 
-    MeLEDMatrixProtocol(DigitalPin *pinScl, DigitalPin *pinSda);
+    MeLEDMatrixProtocol(SinkBool pinScl, SinkBool pinSda);
 
     template<typename ITERABLE>
     void operator()(ITERABLE data)
@@ -25,8 +25,8 @@ public:
 
 private:
 
-    DigitalPin *_pinScl;
-    DigitalPin *_pinSda;
+    SinkBool _pinScl;
+    SinkBool _pinSda;
 
     static const uint8_t MATRIX_LENGTH  = 16;     // The matrix is 16 columns wide
     static const uint8_t ADDR_AUTO      = 0x40;   // Automatic address increment mode
