@@ -10,7 +10,7 @@ public:
 
     virtual ~AnalogPinReader(void) {}
 
-    virtual int16_t readPin(void) = 0;
+    virtual int16_t readPin(void) const = 0;
     virtual AnalogPinReader *clone(void) const = 0;
 
 };
@@ -22,7 +22,7 @@ public:
 
     ControllerPin(uint8_t pin) : _pin(pin) {}
 
-    int16_t readPin(void)
+    int16_t readPin(void) const
     { return analogRead(_pin); }
 
     AnalogPinReader *clone(void) const

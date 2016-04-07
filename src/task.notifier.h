@@ -10,7 +10,7 @@ class Notifier
 {
 public:
 
-    using OBSERVER = vl::Func<void(SUBJECT *)>;
+    using OBSERVER = vl::Func<void(SUBJECT)>;
 
     Notifier(void);
 
@@ -26,7 +26,7 @@ public:
     }
 
 
-    void operator()(SUBJECT *subject)
+    void operator()(SUBJECT subject)
     { for (auto notice : _observers) notice(subject); }
 
 

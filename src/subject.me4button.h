@@ -13,11 +13,9 @@ public:
 
     using OBSERVER = vl::Func<void(Me4ButtonSubject *)>;
 
-    Me4ButtonSubject(OBSERVER observer, AnalogPinReader *pin);
-    Me4ButtonSubject(const Me4ButtonSubject &that);
-    Me4ButtonSubject(Me4ButtonSubject &&that);
+    Me4ButtonSubject(OBSERVER observer);
 
-    void operator()(void);
+    void operator()(int16_t pinValue);
 
     enum BUTTON
     {
@@ -35,10 +33,10 @@ public:
 private:
 
     OBSERVER _notice;
-    std::auto_ptr<AnalogPinReader> _pin;
     BUTTON _buttonState;
 
     BUTTON translatePin(uint16_t pinValue);
+    void setState(BUTTON newState);
 
 };
 
