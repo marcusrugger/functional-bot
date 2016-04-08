@@ -17,8 +17,11 @@ using Idleloop      = vl::Func<void(void)>;
 using Runnable      = vl::Func<void(void)>;
 using Command       = vl::Func<void(void)>;
 using Observer      = vl::Func<void(void)>;
+
 using SinkBool      = vl::Func<void(bool)>;
 using SinkUint16    = vl::Func<void(uint16_t)>;
+
+using SourceBool    = vl::Func<bool(void)>;
 using SourceUint16  = vl::Func<uint16_t(void)>;
 
 

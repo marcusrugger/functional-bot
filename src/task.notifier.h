@@ -14,6 +14,10 @@ public:
 
     Notifier(void) {}
 
+    void operator()(SUBJECT subject) const
+    { for (auto notice : _observers) notice(subject); }
+
+
     void subscribe(OBSERVER observer)
     {
         if (std::find(_observers.begin(), _observers.end(), observer) == _observers.end())
@@ -24,10 +28,6 @@ public:
     {
         _observers.erase(std::remove(_observers.begin(), _observers.end(), observer), _observers.end());
     }
-
-
-    void operator()(SUBJECT subject)
-    { for (auto notice : _observers) notice(subject); }
 
 
 private:

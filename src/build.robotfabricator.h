@@ -25,7 +25,7 @@ public:
 
 protected:
 
-    void subscribe(uint16_t time, Runnable task);
+    virtual void subscribe(uint16_t time, Runnable task);
 
     Runnable    assembleDisplayAnimator(uint8_t Scl, uint8_t Sda);
     SinkUint16  assembleSegmentedDisplayDecimal(uint8_t scl, uint8_t sda);

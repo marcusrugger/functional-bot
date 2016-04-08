@@ -44,9 +44,9 @@ public:
         return digitalRead(_pin) == HIGH;
     }
 
-    unsigned long readPulse(bool state, unsigned long timeout)
+    unsigned long operator()(bool state, unsigned long timeout)
     {
-        setMode(INPUT);
+        setReadMode();
         return pulseIn(_pin, state ? HIGH : LOW, timeout);
     }
 
