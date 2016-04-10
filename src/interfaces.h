@@ -13,13 +13,14 @@ enum BUTTON_STATE
 };
 
 
-using Idleloop      = vl::Func<void(void)>;
+using EventLoop     = vl::Func<void(void)>;
 using Runnable      = vl::Func<void(void)>;
 using Command       = vl::Func<void(void)>;
 using Observer      = vl::Func<void(void)>;
 
 using SinkBool      = vl::Func<void(bool)>;
 using SinkUint16    = vl::Func<void(uint16_t)>;
+using SinkButton    = vl::Func<void(BUTTON_STATE)>;
 
 using SourceBool    = vl::Func<bool(void)>;
 using SourceUint16  = vl::Func<uint16_t(void)>;
@@ -31,9 +32,13 @@ class ArrayIterator
 public:
 
     ArrayIterator(const T *ptr) : _ptr(ptr) {}
+    ArrayIterator(const ArrayIterator &other) : _ptr(other._ptr) {}
 
-    ArrayIterator &operator++(void)
-    { ++_ptr; return *this; }
+    ArrayIterator &operator=(const ArrayIterator &other)
+    { _ptr = other._ptr; return *this; }
+
+    ArrayIterator operator++(void)
+    { return ArrayIterator<T>(++_ptr); }
 
     ArrayIterator operator++(int)
     { return ArrayIterator<T>(_ptr++); }
@@ -64,12 +69,19 @@ public:
 
     Array(void) : _ptr(NULL), _len(0) {}
     Array(const T *ptr, uint16_t len) : _ptr(ptr), _len(len) {}
+    Array(const Array &other) : _ptr(other._ptr), _len(other._len) {}
 
-    ArrayIterator<T> begin(void)
+    Array &operator=(const Array &other)
+    { _ptr = other._ptr; _len = other._len; return *this; }
+
+    ArrayIterator<T> begin(void) const
     { return ArrayIterator<T>(_ptr); }
 
-    ArrayIterator<T> end(void)
+    ArrayIterator<T> end(void) const
     { return ArrayIterator<T>(_ptr+_len); }
+
+    uint16_t count(void) const
+    { return _len; }
 
 private:
 

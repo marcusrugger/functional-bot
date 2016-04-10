@@ -10,8 +10,9 @@ class TaskRunner
 public:
 
     TaskRunner(void);
+    TaskRunner(const TaskRunner &other);
 
-    void operator()(void);
+    void operator()(void) const;
 
     void subscribe(Runnable task);
     void unsubscribe(Runnable task);

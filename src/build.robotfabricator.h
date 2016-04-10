@@ -20,25 +20,20 @@ public:
 
     void buildDisplayAnimator(void);
 
-    Idleloop getIdleloop(void);
-
 
 protected:
 
-    virtual void subscribe(uint16_t time, Runnable task);
+    virtual void subscribe(uint16_t time, Runnable task) = 0;
 
     Runnable    assembleDisplayAnimator(uint8_t Scl, uint8_t Sda);
     SinkUint16  assembleSegmentedDisplayDecimal(uint8_t scl, uint8_t sda);
+    SinkUint16  assembleSegmentedDisplayHex(uint8_t scl, uint8_t sda);
     SinkUint16  assembleMatrixDisplayDecimal(uint8_t scl, uint8_t sda);
-    Runnable    assembleMe4ButtonPanel(SourceUint16 source, Me4Button::PROCESSOR observer);
+    SinkUint16  assembleMatrixDisplayHex(uint8_t scl, uint8_t sda);
+    Runnable    assembleMe4ButtonPanel(SourceUint16 source, Me4Button::OBSERVER observer);
 
     MeLEDMatrixProtocol     createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda);
     SegmentDisplayProtocol  createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda);
-
-
-private:
-
-    TaskRunner _scheduler;
 
 };
 

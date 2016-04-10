@@ -6,7 +6,12 @@ TaskRunner::TaskRunner(void)
 {}
 
 
-void TaskRunner::operator()(void)
+TaskRunner::TaskRunner(const TaskRunner &other)
+:   _tasks(other._tasks)
+{}
+
+
+void TaskRunner::operator()(void) const
 {
     for (auto task : _tasks) task();
 }
@@ -14,8 +19,7 @@ void TaskRunner::operator()(void)
 
 void TaskRunner::subscribe(Runnable task)
 {
-    if (std::find(_tasks.begin(), _tasks.end(), task) == _tasks.end())
-        _tasks.push_back(task);
+    _tasks.push_back(task);
 }
 
 

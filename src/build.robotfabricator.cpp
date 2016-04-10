@@ -12,17 +12,13 @@
 
 MeLEDMatrixProtocol RobotFabricator::createMeLEDMatrixProtocol(uint8_t Scl, uint8_t Sda)
 {
-    DigitalPin pinScl(Scl);
-    DigitalPin pinSda(Sda);
-    return MeLEDMatrixProtocol(pinScl, pinSda);
+    return MeLEDMatrixProtocol(DigitalPin(Scl), DigitalPin(Sda));
 }
 
 
 SegmentDisplayProtocol RobotFabricator::createSegmentDisplayProtocol(uint8_t Scl, uint8_t Sda)
 {
-    DigitalPin pinScl(Scl);
-    DigitalPin pinSda(Sda);
-    return SegmentDisplayProtocol(pinScl, pinSda);
+    return SegmentDisplayProtocol(DigitalPin(Scl), DigitalPin(Sda));
 }
 
 
@@ -55,6 +51,15 @@ SinkUint16 RobotFabricator::assembleSegmentedDisplayDecimal(uint8_t scl, uint8_t
 }
 
 
+SinkUint16 RobotFabricator::assembleSegmentedDisplayHex(uint8_t scl, uint8_t sda)
+{
+    SegmentDisplayProtocol serialize(createSegmentDisplayProtocol(scl, sda));
+    HexEncoder encode(Me7SegmentEncoder::encodeHex);
+
+    return [=](uint16_t value) mutable { serialize(encode(value)); };
+}
+
+
 SinkUint16 RobotFabricator::assembleMatrixDisplayDecimal(uint8_t scl, uint8_t sda)
 {
     MeLEDMatrixProtocol serialize(createMeLEDMatrixProtocol(scl, sda));
@@ -64,21 +69,18 @@ SinkUint16 RobotFabricator::assembleMatrixDisplayDecimal(uint8_t scl, uint8_t sd
 }
 
 
-Runnable RobotFabricator::assembleMe4ButtonPanel(SourceUint16 source, Me4Button::PROCESSOR observer)
+SinkUint16 RobotFabricator::assembleMatrixDisplayHex(uint8_t scl, uint8_t sda)
+{
+    MeLEDMatrixProtocol serialize(createMeLEDMatrixProtocol(scl, sda));
+    MatrixHexEncoder encode(MeLEDMatrixEncoder::encodeHex);
+
+    return [=](uint16_t value) mutable { serialize(encode(value));  };
+}
+
+
+Runnable RobotFabricator::assembleMe4ButtonPanel(SourceUint16 source, Me4Button::OBSERVER observer)
 {
     Me4ButtonSubject setButtonState(observer);
 
     return [=](void) mutable { setButtonState(Me4Button::translatePin(source())); };
-}
-
-
-void RobotFabricator::subscribe(uint16_t time, Runnable task)
-{
-    _scheduler.subscribe( TaskTimer(time, task) );
-}
-
-
-Idleloop RobotFabricator::getIdleloop(void)
-{
-    return _scheduler;
 }

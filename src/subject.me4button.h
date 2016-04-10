@@ -18,7 +18,7 @@ public:
         BUTTON_4    = 0x08
     };
 
-    using PROCESSOR = vl::Func<void(BUTTON)>;
+    using OBSERVER = vl::Func<void(BUTTON)>;
 
     static BUTTON translatePin(uint16_t pinValue)
     {
@@ -41,9 +41,7 @@ class Me4ButtonSubject
 {
 public:
 
-    using OBSERVER = vl::Func<void(Me4Button::BUTTON)>;
-
-    Me4ButtonSubject(OBSERVER observer);
+    Me4ButtonSubject(Me4Button::OBSERVER observer);
 
     void operator()(Me4Button::BUTTON newState)
     {
@@ -60,7 +58,7 @@ public:
 
 private:
 
-    OBSERVER _notice;
+    Me4Button::OBSERVER _notice;
     Me4Button::BUTTON _buttonState;
 
 };

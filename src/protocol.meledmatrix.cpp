@@ -20,6 +20,12 @@ MeLEDMatrixProtocol::MeLEDMatrixProtocol(SinkBool pinScl, SinkBool pinSda)
 }
 
 
+MeLEDMatrixProtocol::MeLEDMatrixProtocol(const MeLEDMatrixProtocol &other)
+:   _pinScl(other._pinScl),
+    _pinSda(other._pinSda)
+{}
+
+
 void MeLEDMatrixProtocol::clearMatrix(void)
 {
     start();

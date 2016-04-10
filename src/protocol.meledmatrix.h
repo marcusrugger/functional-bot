@@ -12,6 +12,7 @@ class MeLEDMatrixProtocol
 public:
 
     MeLEDMatrixProtocol(SinkBool pinScl, SinkBool pinSda);
+    MeLEDMatrixProtocol(const MeLEDMatrixProtocol &other);
 
     template<typename ITERABLE>
     void operator()(ITERABLE data)
