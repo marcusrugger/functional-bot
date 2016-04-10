@@ -10,12 +10,17 @@ public:
 
     DisplayAnimatorTask(void);
 
-    Array<uint8_t> operator()(void);
+    using FnBitMap = vl::Func<Array<uint8_t>(void)>;
+
+    FnBitMap operator()(void);
 
 
 private:
 
     uint16_t _animation_index;
+
+    static const uint16_t animation_count;
+    static const uint8_t animation[][4];
 
 };
 

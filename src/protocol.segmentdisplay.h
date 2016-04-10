@@ -13,8 +13,8 @@ public:
 
     SegmentDisplayProtocol(DigitalPin pinScl, DigitalPin pinSda);
 
-    template<typename ITERABLE>
-    void operator()(ITERABLE data)
+    template<typename FnBitMap>
+    void operator()(FnBitMap fnBitmap)
     {
         start();
         writeByte(ADDR_AUTO);
@@ -22,7 +22,7 @@ public:
 
         start();
         writeByte(STARTADDR);
-        for (const auto b : data) writeByte(b);
+        for (const auto b : fnBitmap()) writeByte(b);
         stop();
 
         start();

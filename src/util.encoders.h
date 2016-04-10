@@ -13,8 +13,10 @@ public:
 
     HexEncoder(Encoder encoder);
 
-    std::vector<uint8_t> operator()(uint16_t number);
-    std::vector<uint8_t> operator()(uint8_t x, uint8_t y);
+    using FnBitMap = vl::Func<std::vector<uint8_t>(void)>;
+
+    FnBitMap operator()(uint16_t number);
+    FnBitMap operator()(uint8_t x, uint8_t y);
 
 
 private:
@@ -32,8 +34,10 @@ public:
 
     DecEncoder(Encoder encoder);
 
-    std::vector<uint8_t> operator()(uint16_t number);
-    std::vector<uint8_t> operator()(uint8_t x, uint8_t y);
+    using FnBitMap = vl::Func<std::vector<uint8_t>(void)>;
+
+    FnBitMap operator()(uint16_t number);
+    FnBitMap operator()(uint8_t x, uint8_t y);
 
 
 private:
@@ -51,8 +55,10 @@ public:
 
     MatrixHexEncoder(Encoder encoder);
 
-    std::vector<uint8_t> operator()(uint16_t number);
-    std::vector<uint8_t> operator()(uint8_t x, uint8_t y);
+    using FnBitMap = vl::Func<std::vector<uint8_t>(void)>;
+
+    FnBitMap operator()(uint16_t number);
+    FnBitMap operator()(uint8_t x, uint8_t y);
 
 
 private:
@@ -70,8 +76,10 @@ public:
 
     MatrixDecEncoder(Encoder encoder);
 
-    std::vector<uint8_t> operator()(uint16_t number);
-    std::vector<uint8_t> operator()(uint8_t x, uint8_t y);
+    using FnBitMap = vl::Func<std::vector<uint8_t>(void)>;
+
+    FnBitMap operator()(uint16_t number);
+    FnBitMap operator()(uint8_t x, uint8_t y);
 
 
 private:
