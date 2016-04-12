@@ -91,6 +91,66 @@ private:
 };
 
 
+class ProgMemArrayIterator
+{
+public:
+
+    ProgMemArrayIterator(const uint8_t *ptr) : _ptr(ptr) {}
+    ProgMemArrayIterator(const ProgMemArrayIterator &other) : _ptr(other._ptr) {}
+
+    ProgMemArrayIterator &operator=(const ProgMemArrayIterator &other)
+    { _ptr = other._ptr; return *this; }
+
+    ProgMemArrayIterator operator++(void)
+    { return ProgMemArrayIterator(++_ptr); }
+
+    ProgMemArrayIterator operator++(int)
+    { return ProgMemArrayIterator(_ptr++); }
+
+    bool operator==(const ProgMemArrayIterator &other) const
+    { return _ptr == other._ptr; }
+
+    bool operator!=(const ProgMemArrayIterator &other) const
+    { return _ptr != other._ptr; }
+
+    uint8_t operator*(void) const
+    { return pgm_read_byte(_ptr); }
+
+private:
+
+    const uint8_t *_ptr;
+
+};
+
+
+class ProgMemArray
+{
+public:
+
+    ProgMemArray(void) : _ptr(NULL), _len(0) {}
+    ProgMemArray(const uint8_t *ptr, uint16_t len) : _ptr(ptr), _len(len) {}
+    ProgMemArray(const ProgMemArray &other) : _ptr(other._ptr), _len(other._len) {}
+
+    ProgMemArray &operator=(const ProgMemArray &other)
+    { _ptr = other._ptr; _len = other._len; return *this; }
+
+    ProgMemArrayIterator begin(void) const
+    { return ProgMemArrayIterator(_ptr); }
+
+    ProgMemArrayIterator end(void) const
+    { return ProgMemArrayIterator(_ptr+_len); }
+
+    uint16_t count(void) const
+    { return _len; }
+
+private:
+
+    const uint8_t *_ptr;
+    uint16_t _len;
+
+};
+
+
 using Serializer = vl::Func<void(Array<uint8_t>)>;
 
 

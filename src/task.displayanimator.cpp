@@ -1,8 +1,8 @@
 #include "task.displayanimator.h"
-
+#include <avr/pgmspace.h>
 
 const uint16_t DisplayAnimatorTask::animation_count = 20;
-const uint8_t DisplayAnimatorTask::animation[][4] =
+const uint8_t DisplayAnimatorTask::animation[][4] PROGMEM =
 {
     { 0b00000000, 0b00000000, 0b00000000, 0b00000010 },
     { 0b00000000, 0b00000000, 0b00000000, 0b00000001 },
@@ -37,8 +37,8 @@ DisplayAnimatorTask::DisplayAnimatorTask(void)
 
 DisplayAnimatorTask::FnBitMap DisplayAnimatorTask::operator()(void)
 {
-    Array<uint8_t> it(animation[_animation_index++], 4);
+    ProgMemArray it(animation[_animation_index++], 4);
     _animation_index %= animation_count;
 
-    return [it]() -> Array<uint8_t> { return it; };
+    return [it]() -> ProgMemArray { return it; };
 }

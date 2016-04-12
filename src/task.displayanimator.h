@@ -2,6 +2,7 @@
 #define TASK_DISPLAYANIMATOR_H
 
 #include "interfaces.h"
+#include <avr/pgmspace.h>
 
 
 class DisplayAnimatorTask
@@ -10,7 +11,7 @@ public:
 
     DisplayAnimatorTask(void);
 
-    using FnBitMap = vl::Func<Array<uint8_t>(void)>;
+    using FnBitMap = vl::Func<ProgMemArray(void)>;
 
     FnBitMap operator()(void);
 

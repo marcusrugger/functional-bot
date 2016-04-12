@@ -38,10 +38,40 @@ private:
     static const uint8_t Cmd_DispCtrl = SEGDIS_ON + 0;
 
     void clearMatrix(void);
-    void start();
-    void stop();
-    void writeByte(uint8_t data);
-    void writeBit(bool bit);
+
+    inline void start()
+    {
+        _pinScl(HIGH);
+        _pinSda(LOW);
+    }
+
+    inline void stop()
+    {
+        _pinScl(LOW);
+        _pinSda(LOW);
+        _pinScl(HIGH);
+        _pinSda(HIGH);
+    }
+
+    inline void writeByte(uint8_t data)
+    {
+        writeBit(data & 0x01);
+        writeBit(data & 0x02);
+        writeBit(data & 0x04);
+        writeBit(data & 0x08);
+
+        writeBit(data & 0x10);
+        writeBit(data & 0x20);
+        writeBit(data & 0x40);
+        writeBit(data & 0x80);
+    }
+
+    inline void writeBit(bool bit)
+    {
+        _pinScl(LOW);
+        _pinSda(bit);
+        _pinScl(HIGH);
+    }
 
 };
 

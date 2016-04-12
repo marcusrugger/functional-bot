@@ -2,15 +2,15 @@
 #define HARDWARE_MELEDMATRIX_H
 
 #include "interfaces.h"
+#include <vector>
 
 
 class MeLEDMatrixEncoder
 {
 public:
 
-    static Array<uint8_t> encodeChar(uint8_t ch);
-    static Array<uint8_t> encodeHex(uint8_t number);
-    static Array<uint8_t> encodeDec(uint8_t number);
+    static std::vector<uint8_t> encodeHex(uint8_t number);
+    static std::vector<uint8_t> encodeDec(uint8_t number);
 
 };
 

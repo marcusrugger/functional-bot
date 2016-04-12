@@ -33,37 +33,3 @@ void MeLEDMatrixProtocol::clearMatrix(void)
     for (int a = 0; a < MATRIX_LENGTH; ++a) writeByte(0);
     stop();
 }
-
-
-void MeLEDMatrixProtocol::start()
-{
-    _pinScl(HIGH);
-    _pinSda(LOW);
-}
-
-
-void MeLEDMatrixProtocol::stop()
-{
-    _pinScl(LOW);
-    _pinSda(LOW);
-    _pinScl(HIGH);
-    _pinSda(HIGH);
-}
-
-
-void MeLEDMatrixProtocol::writeByte(uint8_t data)
-{
-    for (int bit = 0; bit < 8; bit++)
-    {
-        writeBit(data & 0x01);
-        data >>= 1;
-    }
-}
-
-
-void MeLEDMatrixProtocol::writeBit(bool bit)
-{
-    _pinScl(LOW);
-    _pinSda(bit);
-    _pinScl(HIGH);
-}

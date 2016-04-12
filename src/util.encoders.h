@@ -51,7 +51,8 @@ class MatrixHexEncoder
 {
 public:
 
-    using Encoder = vl::Func<Array<uint8_t>(uint8_t)>;
+    using EncoderType = std::vector<uint8_t>;
+    using Encoder = vl::Func<EncoderType(uint8_t)>;
 
     MatrixHexEncoder(Encoder encoder);
 
@@ -72,7 +73,8 @@ class MatrixDecEncoder
 {
 public:
 
-    using Encoder = vl::Func<Array<uint8_t>(uint8_t)>;
+    using EncoderType = std::vector<uint8_t>;
+    using Encoder = vl::Func<EncoderType(uint8_t)>;
 
     MatrixDecEncoder(Encoder encoder);
 

@@ -89,9 +89,9 @@ MatrixHexEncoder::FnBitMap MatrixHexEncoder::operator()(uint16_t number)
 
         auto fnEncodeDigit = [&digits, this](uint8_t n)
         {
-            Array<uint8_t> array(_encoder(n));
+            EncoderType encodedDigit(_encoder(n));
             digits.push_back(0);
-            digits.insert(digits.end(), array.begin(), array.end());
+            digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
         };
 
         fnEncodeDigit(number);
@@ -109,23 +109,23 @@ MatrixHexEncoder::FnBitMap MatrixHexEncoder::operator()(uint8_t x, uint8_t y)
     return [x, y, this]() -> std::vector<uint8_t>
     {
         std::vector<uint8_t> digits;
-        Array<uint8_t> array;
+        EncoderType encodedDigit;
 
-        array = _encoder(x);
-        digits.insert(digits.end(), array.begin(), array.end());
+        encodedDigit = _encoder(x);
+        digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
         digits.push_back(0);
 
-        array = _encoder(x >> 4);
-        digits.insert(digits.end(), array.begin(), array.end());
+        encodedDigit = _encoder(x >> 4);
+        digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
         digits.push_back(0);
 
-        array = _encoder(y);
+        encodedDigit = _encoder(y);
         digits.push_back(0);
-        digits.insert(digits.end(), array.begin(), array.end());
+        digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
 
-        array = _encoder(y >> 4);
+        encodedDigit = _encoder(y >> 4);
         digits.push_back(0);
-        digits.insert(digits.end(), array.begin(), array.end());
+        digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
 
         return digits;
     };
@@ -145,9 +145,9 @@ MatrixDecEncoder::FnBitMap MatrixDecEncoder::operator()(uint16_t number)
 
         auto fnEncodeDigit = [&digits, this](uint8_t n)
         {
-            Array<uint8_t> array(_encoder(n));
+            EncoderType encodedDigit(_encoder(n));
             digits.push_back(0);
-            digits.insert(digits.end(), array.begin(), array.end());
+            digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
         };
 
         fnEncodeDigit(number);
@@ -165,23 +165,23 @@ MatrixDecEncoder::FnBitMap MatrixDecEncoder::operator()(uint8_t x, uint8_t y)
     return [x, y, this]() -> std::vector<uint8_t>
     {
         std::vector<uint8_t> digits;
-        Array<uint8_t> array;
+        EncoderType encodedDigit;
 
-        array = _encoder(x);
-        digits.insert(digits.end(), array.begin(), array.end());
+        encodedDigit = _encoder(x);
+        digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
         digits.push_back(0);
 
-        array = _encoder(x / 10);
-        digits.insert(digits.end(), array.begin(), array.end());
+        encodedDigit = _encoder(x / 10);
+        digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
         digits.push_back(0);
 
-        array = _encoder(y);
+        encodedDigit = _encoder(y);
         digits.push_back(0);
-        digits.insert(digits.end(), array.begin(), array.end());
+        digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
 
-        array = _encoder(y / 10);
+        encodedDigit = _encoder(y / 10);
         digits.push_back(0);
-        digits.insert(digits.end(), array.begin(), array.end());
+        digits.insert(digits.end(), encodedDigit.begin(), encodedDigit.end());
 
         return digits;
     };

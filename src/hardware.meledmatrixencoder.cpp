@@ -1,32 +1,8 @@
 #include "hardware.meledmatrixencoder.h"
+#include <avr/pgmspace.h>
 
 
-const uint8_t charMap[][5] =
-{
-    {   // A
-        0b00111110,
-        0b01010000,
-        0b10010000,
-        0b01010000,
-        0b00111110
-    },
-    {   // B
-        0b01101100,
-        0b10010010,
-        0b10010010,
-        0b10010010,
-        0b11111110
-    }
-};
-
-
-Array<uint8_t> MeLEDMatrixEncoder::encodeChar(uint8_t n)
-{
-    return Array<uint8_t>(charMap[n % 2], 5);
-}
-
-
-const uint8_t hexMap[][3]
+const uint8_t hexMap[][3] PROGMEM
 {
     {   // 0
         0b11111000,
@@ -111,13 +87,23 @@ const uint8_t hexMap[][3]
 };
 
 
-Array<uint8_t> MeLEDMatrixEncoder::encodeHex(uint8_t n)
+std::vector<uint8_t> MeLEDMatrixEncoder::encodeHex(uint8_t n)
 {
-    return Array<uint8_t>(hexMap[n & 0x0f], 3);
+    return std::vector<uint8_t>
+    {
+        pgm_read_byte(&(hexMap[n & 0x0f][0])),
+        pgm_read_byte(&(hexMap[n & 0x0f][1])),
+        pgm_read_byte(&(hexMap[n & 0x0f][2]))
+    };
 }
 
 
-Array<uint8_t> MeLEDMatrixEncoder::encodeDec(uint8_t n)
+std::vector<uint8_t> MeLEDMatrixEncoder::encodeDec(uint8_t n)
 {
-    return Array<uint8_t>(hexMap[n % 10], 3);
+    return std::vector<uint8_t>
+    {
+        pgm_read_byte(&(hexMap[n % 10][0])),
+        pgm_read_byte(&(hexMap[n % 10][1])),
+        pgm_read_byte(&(hexMap[n % 10][2]))
+    };
 }
