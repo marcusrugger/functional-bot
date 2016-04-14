@@ -13,6 +13,25 @@ enum BUTTON_STATE
 };
 
 
+void serializeFreeMemory(const char *);
+uint16_t freeMemory();
+class ButtonObserver
+{
+private:
+
+    vl::Func<void(void)> _fn;
+
+public:
+
+    ButtonObserver(vl::Func<void(void)> fn) : _fn(fn) {}
+
+    void operator()(BUTTON_STATE button)
+    {
+        if (button == BUTTON_PRESSED) _fn();
+    }
+};
+
+
 using EventLoop     = vl::Func<void(void)>;
 using Runnable      = vl::Func<void(void)>;
 using Command       = vl::Func<void(void)>;
